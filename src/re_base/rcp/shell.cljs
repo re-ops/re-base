@@ -1,4 +1,4 @@
-(ns re-conf.rcp.shell
+(ns re-base.rcp.shell
   "Shell setup recipes"
   (:require-macros
    [clojure.core.strint :refer (<<)])
