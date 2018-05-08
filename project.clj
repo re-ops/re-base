@@ -43,7 +43,7 @@
               :source-paths ["src"]
               :figwheel true
               :compiler {
-                :main re-base.main
+                :main re-base.rcp.main
                 :asset-path "target/js/compiled/dev"
                 :output-to "target/js/compiled/re-base.js"
                 :output-dir "target/js/compiled/dev"
