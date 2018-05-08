@@ -10,20 +10,16 @@
    [re-conf.cljs.shell :refer (exec)]
    [re-conf.cljs.output :refer (summary)]))
 
-(defn ^{:private true} tmux
+(defn tmux
   "Setup tmux for user"
-  [{:keys [user]}]
-  (let [home (<< "/home/~{user}/") dest (<< "~{home}/.tmux")]
+  [{:keys [user gid uid]}]
+  (let [home (<< "/home/~{user}") dest (<< "~{home}/.tmux")]
     (->
      (package "tmux")
-     (clone "git://github.com/narkisr/.tmux.git")
-     (chown user dest)
-     (directory (<< "~{dest}/plugins") :present)
+     (clone "git://github.com/narkisr/.tmux.git" dest)
+     (directory (<< "~{dest}/plugins/") :present)
+     (chown dest uid gid)
      (clone "git://github.com/tmux-plugins/tpm" (<< "~{dest}/plugins/tpm"))
-     (symlink (<< "{dest}/.tmux.conf") (<< "~{home}/.tmux.conf")))))
-
-(defn tmuxinator
-  "Setup Tmuxinator"
-  [{:keys [user]}])
+     (symlink  (<< "~{home}/.tmux.conf") (<< "{dest}/.tmux.conf") :present))))
 
 (comment)
