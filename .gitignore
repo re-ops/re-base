@@ -2,3 +2,7 @@ target
 re-base.js
 package-lock.json
 node_modules
+.lein-repl-history
+figwheel_server.log
+re-conf.log
+.nrepl-port
