@@ -13,12 +13,24 @@
                  ; << macro
                  [org.clojure/core.incubator "0.1.4"]
 
-                 [re-conf "0.1.0"]
+                 [re-conf "0.1.0"] 
+  ]
+  :npm {
+        :dependencies [
+          ["request" "2.85.0"]
+        ]
 
-                 ]
+        :devDependencies[
+          ["source-map-support" "^0.4.15"]
+          ["ws" "^0.8.1"]
+          ["winston" "3.0.0-rc3"]
+          ["systeminformation" "3.37.9"]
+        ]
+  }
   :plugins [[lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]
             [lein-figwheel "0.5.14"]
             [lein-cljfmt "0.5.7"]
+            [lein-npm "0.6.2"]
             ]
 
 
@@ -40,16 +52,6 @@
                 :source-map-timestamp true
 		   }
              }
-             {:id "test"
-              :source-paths ["src" "test"]
-              :notify-command ["node" "target/unit-tests.js"]
-              :compiler {
-                 :output-to "target/unit-tests.js"
-                 :optimizations :none
-                 :target :nodejs
-               :main re-base.test.suite
-		   }
-		 }
              {:id "prod"
               :source-paths ["src"]
               :compiler {
@@ -73,8 +75,7 @@
 
     :aliases {
        "travis" [
-         "do" "clean," "cljfmt" "check," "npm" "install," "cljsbuild" "once" "prod," "cljsbuild" "test"
-       ]
+         "do" "clean," "cljfmt" "check," "npm" "install," "cljsbuild" "once" "prod," "cljsbuild" "test" ]
        
     }
 )
