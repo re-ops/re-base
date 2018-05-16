@@ -9,7 +9,7 @@
 
 (defn -main [e & args]
   (assert-node-major-version)
-  (let [env (if e (cljs.reader/read-string (io/slurp f)) {})]
+  (let [env (if e (cljs.reader/read-string (io/slurp e)) {})]
     (take! (initialize)
            (fn [r]
              (info "Started provisioning using re-base" ::main)
