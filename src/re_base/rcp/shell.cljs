@@ -3,6 +3,7 @@
   (:require-macros
    [clojure.core.strint :refer (<<)])
   (:require
+   [re-conf.cljs.log :refer (info debug error)]
    [re-conf.cljs.pkg :refer (package)]
    [re-conf.cljs.file :refer (chown directory symlink)]
    [re-conf.cljs.facts :refer (home)]
@@ -22,4 +23,3 @@
      (clone "git://github.com/tmux-plugins/tpm" (<< "~{dest}/plugins/tpm"))
      (symlink  (<< "~{home}/.tmux.conf") (<< "{dest}/.tmux.conf") :present))))
 
-(comment)
