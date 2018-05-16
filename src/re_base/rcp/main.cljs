@@ -11,9 +11,9 @@
   (assert-node-major-version)
   (let [env (if e (cljs.reader/read-string (io/slurp f)) {})]
     (take! (initialize)
-         (fn [r]
-           (info "Started provisioning using re-base" ::main)
-           (invoke re-base.rcp.shell env)))))
+           (fn [r]
+             (info "Started provisioning using re-base" ::main)
+             (invoke re-base.rcp.shell env)))))
 
 (set! *main-cli-fn* -main)
 
