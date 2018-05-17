@@ -13,8 +13,9 @@
                  ; << macro
                  [org.clojure/core.incubator "0.1.4"]
 
-                 [re-conf "0.1.0"] 
+                 [re-conf "0.1.1"]
   ]
+
   :npm {
         :dependencies [
           ["request" "2.85.0"]
@@ -76,6 +77,5 @@
     :aliases {
        "travis" [
          "do" "clean," "cljfmt" "check," "npm" "install," "cljsbuild" "once" "prod," "cljsbuild" "test" ]
-       
     }
 )
