@@ -1,4 +1,6 @@
 (ns re-base.rcp.main
+  (:require-macros
+   [clojure.core.strint :refer (<<)])
   (:require
    [cljs.core.async :as async :refer [take!]]
    [cljs-node-io.core :as io]
@@ -7,9 +9,13 @@
    [re-conf.cljs.core :refer (invoke assert-node-major-version)]
    [re-conf.cljs.log :refer (info debug error)]))
 
+(defn home
+  [{:keys [user] :as m}]
+  (assoc m :home (<< "/home/~{user}")))
+
 (defn -main [e & args]
   (assert-node-major-version)
-  (let [env (if e (cljs.reader/read-string (io/slurp e)) {})]
+  (let [env (if e (home (cljs.reader/read-string (io/slurp e))) {})]
     (take! (initialize)
            (fn [r]
              (info "Started provisioning using re-base" ::main)
