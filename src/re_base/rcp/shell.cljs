@@ -3,7 +3,6 @@
   (:require-macros
    [clojure.core.strint :refer (<<)])
   (:require
-   [re-conf.resources.log :refer (info debug error)]
    [re-conf.resources.pkg :refer (package)]
    [re-conf.resources.shell :refer (unless)]
    [re-conf.resources.file :refer (chown directory symlink contains)]
@@ -38,6 +37,7 @@
   "Setup https://github.com/robbyrussell/oh-my-zsh"
   [{:keys [home uid gid]}]
   (let [dest (<< "~{home}/.oh-my-zsh")]
-    (clone "git://github.com/narkisr/oh-my-zsh.git" dest)
-    (symlink  (<< "~{home}/.zshrc") (<< "{dest}/.zshrc") :present)
-    (summary "oh-my-zsh setup")))
+    (->
+      (clone "git://github.com/narkisr/oh-my-zsh.git" dest)
+      (symlink (<< "~{dest}/.zshrc") (<< "~{home}/.zshrc") :present)
+      (summary "oh-my-zsh setup"))))
