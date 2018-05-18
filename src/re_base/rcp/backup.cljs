@@ -1,10 +1,10 @@
 (ns re-base.rcp.backup
   "Backup utilities recipes"
   (:require
-   [re-conf.cljs.download :refer (download checksum)]
-   [re-conf.cljs.archive :refer (bzip2)]
-   [re-conf.cljs.shell :refer (exec)]
-   [re-conf.cljs.output :refer (summary)]))
+   [re-conf.resources.download :refer (download checksum)]
+   [re-conf.resources.archive :refer (bzip2)]
+   [re-conf.resources.shell :refer (exec)]
+   [re-conf.resources.output :refer (summary)]))
 
 (defn restic
   "Setting up restic"

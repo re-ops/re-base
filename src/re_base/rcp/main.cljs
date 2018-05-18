@@ -5,9 +5,9 @@
    [cljs.core.async :as async :refer [take!]]
    [cljs-node-io.core :as io]
    [re-base.rcp.shell]
-   [re-conf.cljs.pkg :as p :refer (initialize)]
-   [re-conf.cljs.core :refer (invoke assert-node-major-version)]
-   [re-conf.cljs.log :refer (info debug error)]))
+   [re-conf.resources.pkg :as p :refer (initialize)]
+   [re-conf.core :refer (invoke assert-node-major-version)]
+   [re-conf.resources.log :refer (info debug error)]))
 
 (defn home
   [{:keys [user] :as m}]

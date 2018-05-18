@@ -3,13 +3,13 @@
   (:require-macros
    [clojure.core.strint :refer (<<)])
   (:require
-   [re-conf.cljs.log :refer (info debug error)]
-   [re-conf.cljs.pkg :refer (package)]
-   [re-conf.cljs.shell :refer (unless)]
-   [re-conf.cljs.file :refer (chown directory symlink contains)]
-   [re-conf.cljs.git :refer (clone)]
-   [re-conf.cljs.shell :refer (exec)]
-   [re-conf.cljs.output :refer (summary)]))
+   [re-conf.resources.log :refer (info debug error)]
+   [re-conf.resources.pkg :refer (package)]
+   [re-conf.resources.shell :refer (unless)]
+   [re-conf.resources.file :refer (chown directory symlink contains)]
+   [re-conf.resources.git :refer (clone)]
+   [re-conf.resources.shell :refer (exec)]
+   [re-conf.resources.output :refer (summary)]))
 
 (defn tmux
   "Setup tmux for user"
@@ -21,7 +21,8 @@
      (directory (<< "~{dest}/plugins/") :present)
      (chown dest uid gid)
      (clone "git://github.com/tmux-plugins/tpm" (<< "~{dest}/plugins/tpm"))
-     (symlink (<< "~{dest}/.tmux.conf") (<< "~{home}/.tmux.conf") :present))))
+     (symlink (<< "~{dest}/.tmux.conf") (<< "~{home}/.tmux.conf") :present)
+     (summary "tmux installation"))))
 
 (defn zsh
   "zsh setup"
@@ -30,11 +31,13 @@
     (->
      (package "zsh")
      (contains "/etc/passwd" "re-ops:/bin/zsh")
-     (unless "/usr/bin/chsh" "-s" "/usr/bin/zsh" user))))
+     (unless "/usr/bin/chsh" "-s" "/usr/bin/zsh" user)
+     (summary "zsh installation"))))
 
 (defn oh-my-zsh
   "Setup https://github.com/robbyrussell/oh-my-zsh"
   [{:keys [home uid gid]}]
   (let [dest (<< "~{home}/.oh-my-zsh")]
     (clone "git://github.com/narkisr/oh-my-zsh.git" dest)
-    (symlink  (<< "~{home}/.zshrc") (<< "{dest}/.zshrc") :present)))
+    (symlink  (<< "~{home}/.zshrc") (<< "{dest}/.zshrc") :present)
+    (summary "oh-my-zsh setup")))
