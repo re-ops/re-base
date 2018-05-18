@@ -38,6 +38,6 @@
   [{:keys [home uid gid]}]
   (let [dest (<< "~{home}/.oh-my-zsh")]
     (->
-      (clone "git://github.com/narkisr/oh-my-zsh.git" dest)
-      (symlink (<< "~{dest}/.zshrc") (<< "~{home}/.zshrc") :present)
-      (summary "oh-my-zsh setup"))))
+     (clone "git://github.com/narkisr/oh-my-zsh.git" dest)
+     (symlink (<< "~{dest}/.zshrc") (<< "~{home}/.zshrc") :present)
+     (summary "oh-my-zsh setup"))))

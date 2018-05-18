@@ -9,8 +9,6 @@
    [re-conf.core :refer (invoke assert-node-major-version)]
    [re-conf.resources.log :refer (info debug error)]))
 
-
-
 (defn -main [e & args]
   (assert-node-major-version)
   (let [env (if e (cljs.reader/read-string (io/slurp e)) {})]
