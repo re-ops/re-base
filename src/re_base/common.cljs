@@ -4,5 +4,5 @@
    [clojure.core.strint :refer (<<)]))
 
 (defn dots
-   [home]
-   (<< "~{home}/.dots"))
+  [home]
+  (<< "~{home}/.dots"))

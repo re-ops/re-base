@@ -47,16 +47,16 @@
 (defn dot-files
   "Setting up dot files from git://github.com/narkisr/dots.git"
   [{:keys [home uid gid]}]
-   (let [dest (dots home)]
-     (->
-       (clone "git://github.com/narkisr/dots.git" dest)
-       (chown dest uid gid)
-       (summary "dot-files setup done"))))
+  (let [dest (dots home)]
+    (->
+     (clone "git://github.com/narkisr/dots.git" dest)
+     (chown dest uid gid)
+     (summary "dot-files setup done"))))
 
 (defn ack
   "ack grep setup"
   [{:keys [home]}]
   (->
-    (package "ack-grep")
-    (symlink (<< "~(dots home)/.ackrc") (<< "~{home}/.ackrc") :present)
-    (summary "ack setup done")))
+   (package "ack-grep")
+   (symlink (<< "~(dots home)/.ackrc") (<< "~{home}/.ackrc") :present)
+   (summary "ack setup done")))
