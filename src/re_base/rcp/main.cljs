@@ -5,7 +5,7 @@
    [cljs.core.async :as async :refer [take!]]
    [cljs-node-io.core :as io]
    [re-base.rcp.shell]
-   [re-base.rcp.preq]
+   [re-base.rcp.preqs]
    [re-conf.resources.pkg :as p :refer (initialize)]
    [re-conf.core :refer (invoke assert-node-major-version)]
    [re-conf.resources.log :refer (info debug error)]))
