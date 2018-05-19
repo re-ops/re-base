@@ -56,10 +56,11 @@
              {:id "prod"
               :source-paths ["src"]
               :compiler {
+                :main re-base.rcp.main
                 :output-to "re-base.js"
                 :output-dir "target/js/compiled/prod"
                 :target :nodejs
-                :optimizations :simple}}]}
+                :optimizations :none}}]}
 
     :profiles {
       :dev {
