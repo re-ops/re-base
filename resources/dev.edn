@@ -2,4 +2,8 @@
   :user "re-ops"
   :gid 1000
   :uid 1000
+  :git {
+    :user "ronen"
+    :email "narkisr.com"
+  }
 }

@@ -1,0 +1,13 @@
+[alias]
+      sub-up = submodule update --init
+      for-master = submodule foreach git checkout master
+      cm = commit -m
+      sub-add = submodule add
+      for-pull = submodule foreach git pull origin master
+[user]
+      name = {{user}}
+      email = {{email}}
+[http]
+      sslVerify = false
+[core]
+      editor = vim
