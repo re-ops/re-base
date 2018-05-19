@@ -60,3 +60,11 @@
    (package "ack-grep")
    (symlink (<< "~(dots home)/.ackrc") (<< "~{home}/.ackrc") :present)
    (summary "ack setup done")))
+
+(defn rlwrap
+  "rlwrap setup"
+  [{:keys [home]}]
+  (->
+   (package "rlwrap")
+   (symlink (<< "~(dots home)/.inputrc") (<< "~{home}/.inputrc") :present)
+   (summary "rlwrap setup done")))
