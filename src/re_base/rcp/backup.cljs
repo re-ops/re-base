@@ -3,8 +3,9 @@
   (:refer-clojure :exclude [update key remove])
   (:require
    [re-conf.resources.download :refer (download checksum)]
-   [re-conf.resources.pkg :refer (package repository key update)]
-   [re-conf.resources.archive :refer (bzip2)]
+   [re-conf.resources.pkg :refer (package)]
+   [re-conf.resources.file :refer (directory)]
+   [re-conf.resources.archive :refer (bzip2 untar)]
    [re-conf.resources.shell :refer (exec)]
    [re-conf.resources.output :refer (summary)]))
 
@@ -24,9 +25,33 @@
   "Setting up Octo"
   []
   (->
-   (package "openjdk-8-jre")
-   (repository "https://raw.githubusercontent.com/narkisr/fpm-barbecue/repo/packages/ubuntu/" :present)
-   (key "keyserver.ubuntu.com" "42ED3C30B8C9F76BC85AC1EC8B095396E29035F0")
-   (update)
+   (package "openjdk-8-jre" :present)
    (package "octo" :present)
    (summary "octo setup")))
+
+(defn zbackup
+  "Setting up zbackup"
+  []
+  (->
+   (package "zbackup" :present)
+   (summary "zbackup setup")))
+
+(defn rclone
+  "Setting up rclone"
+  []
+  (->
+   (package "rclone" :present)
+   (summary "rclone setup")))
+
+(defn dropbox-headless
+  "Setting up headless dropbox"
+  []
+  (let [archive "/tmp/dropbox.tar.gz"
+        url "https://www.dropbox.com/download?plat=lnx.x86_64"
+        dest "/usr/local/dropbox-deamon"]
+    (->
+     (download url archive)
+     (untar archive "/tmp/")
+     (directory dest :present)
+     (exec "/bin/mv" "/tmp/.dropbox-dist" dest  :sudo true)
+     (summary "headless dropbox setup"))))
