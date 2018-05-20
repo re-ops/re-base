@@ -1,12 +1,14 @@
 (ns re-base.rcp.backup
   "Backup utilities recipes"
+  (:require-macros
+   [clojure.core.strint :refer (<<)])
   (:refer-clojure :exclude [update key remove])
   (:require
    [re-conf.resources.download :refer (download checksum)]
    [re-conf.resources.pkg :refer (package)]
    [re-conf.resources.file :refer (directory)]
    [re-conf.resources.archive :refer (bzip2 untar)]
-   [re-conf.resources.shell :refer (exec)]
+   [re-conf.resources.shell :refer (exec unless)]
    [re-conf.resources.output :refer (summary)]))
 
 (defn restic
@@ -53,5 +55,7 @@
      (download url archive)
      (untar archive "/tmp/")
      (directory dest :present)
-     (exec "/bin/mv" "/tmp/.dropbox-dist" dest  :sudo true)
+     (exec "test" "-d" (<< "~{dest}/.dropbox-dist"))
+     (unless "/bin/mv" "/tmp/.dropbox-dist" dest)
      (summary "headless dropbox setup"))))
+
