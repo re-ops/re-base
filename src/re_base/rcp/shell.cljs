@@ -31,7 +31,7 @@
     (->
      (package "zsh")
      (contains "/etc/passwd" "re-ops:/bin/zsh")
-     (unless "/usr/bin/chsh" "-s" "/usr/bin/zsh" user :sudo true)
+     (unless "/usr/bin/chsh" "-s" "/usr/bin/zsh" user)
      (summary "zsh setup done"))))
 
 (defn oh-my-zsh
