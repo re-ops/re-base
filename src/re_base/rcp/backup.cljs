@@ -4,8 +4,10 @@
    [clojure.core.strint :refer (<<)])
   (:refer-clojure :exclude [update key remove])
   (:require
+   [re-conf.resources.pkg :refer (package repository key update)]
    [re-conf.resources.download :refer (download checksum)]
    [re-conf.resources.pkg :refer (package)]
+   [re-conf.resources.facts :refer (desktop?)]
    [re-conf.resources.file :refer (directory)]
    [re-conf.resources.archive :refer (bzip2 untar)]
    [re-conf.resources.shell :refer (exec unless)]
@@ -51,11 +53,19 @@
   (let [archive "/tmp/dropbox.tar.gz"
         url "https://www.dropbox.com/download?plat=lnx.x86_64"
         dest "/usr/local/dropbox-deamon"]
-    (->
-     (download url archive)
-     (untar archive "/tmp/")
-     (directory dest :present)
-     (exec "test" "-d" (<< "~{dest}/.dropbox-dist"))
-     (unless "/bin/mv" "/tmp/.dropbox-dist" dest)
-     (summary "headless dropbox setup"))))
+    (if (desktop?)
+      (->
+        (download url archive)
+        (untar archive "/tmp/")
+        (directory dest :present)
+        (exec "test" "-d" (<< "~{dest}/.dropbox-dist"))
+        (unless "/bin/mv" "/tmp/.dropbox-dist" dest)
+        (summary "headless dropbox setup"))
+      (->
+        (repository "deb http://linux.dropbox.com/ubuntu xenial main" :present)
+        (key "pgp.mit.edu" "1C61A2656FB57B7E4DE0F4C1FC918B335044912E")
+        (update)
+        (package "dropbox")
+        (summary "dropbox setup"))
+      )))
 
