@@ -6,7 +6,6 @@
   (:require
    [re-conf.resources.pkg :refer (package repository key update)]
    [re-conf.resources.download :refer (download)]
-   [re-conf.resources.pkg :refer (package)]
    [re-conf.resources.facts :refer (desktop?)]
    [re-conf.resources.file :refer (directory)]
    [re-conf.resources.archive :refer (bzip2 untar)]
