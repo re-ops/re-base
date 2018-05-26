@@ -2,11 +2,11 @@
   "Docker setup and configuration"
   (:require-macros
    [clojure.core.strint :refer (<<)])
-  (:refer-clojure :exclude [update remove])
+  (:refer-clojure :exclude [update])
   (:require
    [re-conf.resources.download :refer (download)]
    [re-conf.resources.file :refer (line chmod)]
-   [re-conf.resources.pkg :refer (package repository key-file update)]
+   [re-conf.resources.pkg :refer (install)]
    [re-conf.resources.output :refer (summary)]))
 
 (defn elasticsearch
@@ -20,14 +20,10 @@
   []
   (let [repo "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic edge"
         url "https://download.docker.com/linux/ubuntu/gpg"
-        k "/tmp/docker.key"]
+        dest "/tmp/docker.key"]
     (->
-     (repository repo :present)
-     (download url k)
-     (key-file k)
-     (update)
-     (package "docker-ce")
-     (summary "docker install"))))
+     (install repo url "docker-ce")
+     (summary "docker-ce install"))))
 
 (defn compose
   "Setting up docker-compose"
