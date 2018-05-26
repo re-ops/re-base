@@ -2,9 +2,9 @@
   "Backup utilities recipes"
   (:require-macros
    [clojure.core.strint :refer (<<)])
-  (:refer-clojure :exclude [update key remove])
+  (:refer-clojure :exclude [update remove])
   (:require
-   [re-conf.resources.pkg :refer (package repository key update)]
+   [re-conf.resources.pkg :refer (package repository key-server update)]
    [re-conf.resources.download :refer (download)]
    [re-conf.resources.facts :refer (desktop?)]
    [re-conf.resources.file :refer (directory)]
@@ -56,7 +56,7 @@
     (if (desktop?)
       (->
        (repository "deb http://linux.dropbox.com/ubuntu xenial main" :present)
-       (key "pgp.mit.edu" "1C61A2656FB57B7E4DE0F4C1FC918B335044912E")
+       (key-server "pgp.mit.edu" "1C61A2656FB57B7E4DE0F4C1FC918B335044912E")
        (update)
        (package "dropbox")
        (summary "dropbox setup"))
