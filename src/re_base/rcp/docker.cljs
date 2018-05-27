@@ -6,7 +6,7 @@
   (:require
    [re-conf.resources.download :refer (download)]
    [re-conf.resources.file :refer (line chmod)]
-   [re-conf.resources.pkg :refer (install package)]
+   [re-conf.resources.pkg :refer (add-repo package)]
    [re-conf.resources.output :refer (summary)]))
 
 (defn elasticsearch
@@ -21,7 +21,7 @@
   (let [repo "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic edge"
         url "https://download.docker.com/linux/ubuntu/gpg"]
     (->
-     (install repo url "0EBFCD88")
+     (add-repo repo url "0EBFCD88")
      (package "docker-ce")
      (summary "docker-ce install"))))
 
