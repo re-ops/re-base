@@ -14,10 +14,7 @@
   (let [repo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
         key "https://dl-ssl.google.com/linux/linux_signing_key.pub"]
     (->
-     (add-repo repo key "")
+     (add-repo repo key "7FAC5991")
      (package "google-chrome-stable")
      (summary "google-chrome install"))))
 
-(defn xmonad
-  "Setting up Xmonad"
-  [])
