@@ -21,6 +21,9 @@
      (summary "google-chrome install"))))
 
 (defn xmonad [{:keys [home]}]
-  (package "xmonad" "ghc" "libghc-xmonad-contrib-dev")
-  (clone "//github.com/narkisr/xmonad-config.git" (<< "~{home}/.xmonad"))
-  (exec "/usr/bin/xmonad" "--recompile" :uid 1000))
+  (->
+     (package "xmonad" "ghc" "libghc-xmonad-contrib-dev")
+     (clone "git://github.com/narkisr/xmonad-config.git" (<< "~{home}/.xmonad"))
+     (exec "/usr/bin/xmonad" "--recompile" :uid 1000)
+     (summary "xmonad setup")
+     ))
