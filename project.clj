@@ -57,7 +57,7 @@
               :source-paths ["src"]
               :compiler {
                 :main re-base.rcp.main
-                :output-to "re-base.js"
+                :output-to "main.js"
                 :output-dir "target/js/compiled/prod"
                 :target :nodejs
                 :optimizations :none}}]}

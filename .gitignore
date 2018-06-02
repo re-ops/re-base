@@ -6,3 +6,4 @@ node_modules
 figwheel_server.log
 re-conf.log
 .nrepl-port
+main.js
