@@ -4,6 +4,8 @@
    [clojure.core.strint :refer (<<)])
   (:refer-clojure :exclude [update])
   (:require
+   [re-conf.resources.git :refer (clone)]
+   [re-conf.resources.shell :refer (exec)]
    [re-conf.resources.download :refer (download)]
    [re-conf.resources.pkg :refer (package add-repo)]
    [re-conf.resources.output :refer (summary)]))
@@ -18,3 +20,9 @@
      (package "google-chrome-stable")
      (summary "google-chrome install"))))
 
+
+(defn xmonad [{:keys [home]}]
+   (package "xmonad" "ghc" "libghc-xmonad-contrib-dev")
+   (clone "//github.com/narkisr/xmonad-config.git" (<< "~{home}/.xmonad"))
+   (exec "/usr/bin/xmonad" "--recompile" :uid 1000)
+  )
