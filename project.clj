@@ -1,4 +1,4 @@
-(defproject re-base "0.1.0"
+(defproject re-base "0.2.0"
   :description "Base recipes"
   :url "https://github.com/re-ops/re-base"
   :license  {:name "Apache License, Version 2.0" :url "http://www.apache.org/licenses/LICENSE-2.0.html"}
@@ -13,7 +13,7 @@
                  ; << macro
                  [org.clojure/core.incubator "0.1.4"]
 
-                 [re-conf "0.1.9"]
+                 [re-conf "0.1.10"]
   ]
 
   :npm {
