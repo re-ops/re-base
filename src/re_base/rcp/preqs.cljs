@@ -21,7 +21,7 @@
   "Setting up barbecue repo"
   []
   (->
-   (repository "deb https://raw.githubusercontent.com/narkisr/fpm-barbecue/repo/packages/ubuntu/ xenial main" :present)
    (key-server "keyserver.ubuntu.com" "42ED3C30B8C9F76BC85AC1EC8B095396E29035F0")
+   (repository "deb https://raw.githubusercontent.com/narkisr/fpm-barbecue/repo/packages/ubuntu/ xenial main" :present)
    (update)
    (summary "barbecue setup")))
