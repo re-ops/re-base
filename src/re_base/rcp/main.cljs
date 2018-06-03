@@ -10,7 +10,7 @@
    [re-base.rcp.backup]
    [re-base.rcp.preqs]
    [re-conf.resources.pkg :as p :refer (initialize)]
-   [re-conf.core :refer (invoke assert-node-major-version)]
+   [re-conf.core :refer (invoke invoke-all report-n-exit assert-node-major-version)]
    [re-conf.resources.log :refer (info debug error)]))
 
 (defn -main [e & args]
@@ -18,13 +18,15 @@
   (let [env (if e (cljs.reader/read-string (io/slurp e)) {})]
     (take! (initialize)
            (fn [r]
-             (info "Started invokeing using re-base" ::main)
-             (take! (invoke re-base.rcp.preqs env)
-                    (fn [r]
-                      (invoke re-base.rcp.backup env)
-                      (invoke re-base.rcp.docker env)
-                      (invoke re-base.rcp.desktop env)
-                      (invoke re-base.rcp.shell env)))))))
+             (info "Provisioning machine using re-base!" ::main)
+             (take! (invoke env re-base.rcp.preqs)
+                    (fn [_]
+                      (report-n-exit
+                       (invoke-all env
+                                   re-base.rcp.backup
+                                   re-base.rcp.docker
+                                   re-base.rcp.desktop
+                                   re-base.rcp.shell))))))))
 
 (set! *main-cli-fn* -main)
 
