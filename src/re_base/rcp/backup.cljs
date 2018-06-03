@@ -4,6 +4,7 @@
    [clojure.core.strint :refer (<<)])
   (:refer-clojure :exclude [update remove])
   (:require
+   [re-base.rcp.dropbox :refer (dropbox-desktop dropbox-headless)]
    [re-conf.resources.pkg :refer (package repository key-server update)]
    [re-conf.resources.download :refer (download)]
    [re-conf.resources.facts :refer (desktop?)]
@@ -45,28 +46,8 @@
    (package "rclone" :present)
    (summary "rclone setup")))
 
-(defn dropbox-headless
-  "Setting up headless dropbox"
+(defn dropbox
   [{:keys [home]}]
-  (let [archive "/tmp/dropbox.tar.gz"
-        url "https://www.dropbox.com/download?plat=lnx.x86_64"
-        py_url "https://www.dropbox.com/download?dl=packages/dropbox.py"
-        py_bin (<< "~{home}/bin/dropbox.py")
-        dest "/usr/local/dropbox-deamon"]
-    (if (desktop?)
-      (->
-       (repository "deb http://linux.dropbox.com/ubuntu xenial main" :present)
-       (key-server "pgp.mit.edu" "1C61A2656FB57B7E4DE0F4C1FC918B335044912E")
-       (update)
-       (package "dropbox")
-       (summary "dropbox setup"))
-      (->
-       (download url archive)
-       (untar archive "/tmp/")
-       (directory dest :present)
-       (exec "test" "-d" (<< "~{dest}/.dropbox-dist"))
-       (unless "/bin/mv" "/tmp/.dropbox-dist" dest)
-       (directory (<< "~{home}/bin") :present)
-       (download py_url py_bin "d7e01a4d178674f1895dc3f74adb7f36" :md5)
-       (summary "headless dropbox setup")))))
-
+  (if (desktop?)
+    (dropbox-desktop)
+    (dropbox-headless)))
