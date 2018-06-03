@@ -7,6 +7,7 @@
    [re-conf.resources.git :refer (clone)]
    [re-conf.resources.shell :refer (exec)]
    [re-conf.resources.download :refer (download)]
+   [re-conf.resources.file :refer (chown)]
    [re-conf.resources.pkg :refer (package add-repo)]
    [re-conf.resources.output :refer (summary)]))
 
@@ -20,9 +21,10 @@
      (package "google-chrome-stable")
      (summary "google-chrome install"))))
 
-(defn xmonad [{:keys [home]}]
+(defn xmonad [{:keys [home uid gid]}]
   (->
    (package "xmonad" "ghc" "libghc-xmonad-contrib-dev")
    (clone "git://github.com/narkisr/xmonad-config.git" (<< "~{home}/.xmonad"))
-   (exec "/usr/bin/xmonad" "--recompile" :uid 1000)
+   (chown (<< "~{home}/.xmonad") uid gid)
+   (exec "/usr/bin/xmonad" "--recompile" :uid uid)
    (summary "xmonad setup")))
