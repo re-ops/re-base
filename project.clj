@@ -28,11 +28,12 @@
           ["systeminformation" "3.37.9"]
         ]
   }
+
   :plugins [[lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]
             [lein-figwheel "0.5.14"]
             [lein-cljfmt "0.5.7"]
-            [lein-npm "0.6.2"]
-            ]
+            [lein-tag "0.1.0"]
+            [lein-npm "0.6.2"]]
 
 
   :source-paths ["src"]
