@@ -37,7 +37,7 @@
              (info "Provisioning machine using re-base!" ::main)
              (take! (invoke env re-base.rcp.preqs)
                     (fn [_]
-                      (case profile
+                      (case (keyword profile)
                         :desktop (desktop env)
                         :backup (backup env))))))))
 
