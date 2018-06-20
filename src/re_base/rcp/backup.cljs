@@ -8,7 +8,7 @@
    [re-conf.resources.pkg :refer (package repository key-server update)]
    [re-conf.resources.download :refer (download)]
    [re-conf.resources.facts :refer (desktop?)]
-   [re-conf.resources.file :refer (directory)]
+   [re-conf.resources.file :refer (directory symlink chmod rename)]
    [re-conf.resources.archive :refer (bzip2 untar)]
    [re-conf.resources.shell :refer (exec unless)]
    [re-conf.resources.output :refer (summary)]))
@@ -16,13 +16,17 @@
 (defn restic
   "Setting up restic"
   []
-  (let [dest "/tmp/restic_0.8.3_linux_amd64.bz2"
-        expected "1e9aca80c4f4e263c72a83d4333a9dac0e24b24e1fe11a8dc1d9b38d77883705"
-        url "https://github.com/restic/restic/releases/download/v0.8.3/restic_0.8.3_linux_amd64.bz2"]
+  (let [version "0.9.1"
+        release (<< "restic_~{version}_linux_amd64")
+        tmp (<< "/tmp/~{release}.bz2")
+        expected "f7f76812fa26ca390029216d1378e5504f18ba5dde790878dfaa84afef29bda7"
+        url (<< "https://github.com/restic/restic/releases/download/v~{version}/~{release}.bz2")]
     (->
-     (download url dest expected :sha256)
-     (bzip2 dest)
-     (summary "restic setup"))))
+     (download url tmp expected :sha256)
+     (bzip2 tmp)
+     (rename (<< "/tmp/~{release}") "/usr/bin/restic")
+     (chmod "/usr/bin/restic" 755)
+     (summary "restic setup done"))))
 
 (defn octo
   "Setting up Octo"
@@ -50,4 +54,4 @@
   [{:keys [home]}]
   (if (desktop?)
     (dropbox-desktop)
-    (dropbox-headless)))
+    (dropbox-headless home)))
