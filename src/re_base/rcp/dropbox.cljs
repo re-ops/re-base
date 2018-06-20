@@ -13,7 +13,7 @@
 
 (defn dropbox-headless
   "Setting up headless dropbox"
-  [{:keys [home]}]
+  [home]
   (let [archive "/tmp/dropbox.tar.gz"
         url "https://www.dropbox.com/download?plat=lnx.x86_64"
         py_url "https://www.dropbox.com/download?dl=packages/dropbox.py"
