@@ -5,7 +5,7 @@
    [clojure.core.strint :refer (<<)])
   (:require
    [re-conf.resources.pkg :refer (package repository key-server update)]
-   [re-conf.resources.file :refer (template)]
+   [re-conf.resources.file :refer (template directory)]
    [re-conf.resources.output :refer (summary)]))
 
 (defn git
@@ -14,6 +14,7 @@
   (let [dest (<< "~{home}/.gitconfig")]
     (->
      (package "git")
+     (directory home)
      (template git "resources/git/gitconfig.mustache" dest)
      (summary "git setup"))))
 
