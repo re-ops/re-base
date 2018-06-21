@@ -1,0 +1,2 @@
+rm -rf /var/lib/apt/lists/partial/*
+/usr/bin/apt-get clean
