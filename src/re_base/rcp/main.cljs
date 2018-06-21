@@ -17,6 +17,7 @@
   [env]
   (report-n-exit
    (invoke-all env
+               re-base.rcp.reops
                re-base.rcp.backup
                re-base.rcp.docker
                re-base.rcp.desktop
@@ -26,7 +27,7 @@
   [env]
   (report-n-exit
    (invoke-all env
-               re-base.rcp.zfs
+               re-base.rcp.reops
                re-base.rcp.backup
                re-base.rcp.shell)))
 
@@ -34,6 +35,7 @@
   [env]
   (report-n-exit
    (invoke-all env
+               re-base.rcp.reops
                re-base.rcp.zfs
                re-base.rcp.docker
                re-base.rcp.shell)))
