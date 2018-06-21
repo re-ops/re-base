@@ -26,7 +26,16 @@
   [env]
   (report-n-exit
    (invoke-all env
+               re-base.rcp.zfs
                re-base.rcp.backup
+               re-base.rcp.shell)))
+
+(defn server
+  [env]
+  (report-n-exit
+   (invoke-all env
+               re-base.rcp.zfs
+               re-base.rcp.docker
                re-base.rcp.shell)))
 
 (defn -main [e profile & args]
@@ -39,6 +48,7 @@
                     (fn [_]
                       (case (keyword profile)
                         :desktop (desktop env)
+                        :server (server env)
                         :backup (backup env))))))))
 
 (set! *main-cli-fn* -main)
