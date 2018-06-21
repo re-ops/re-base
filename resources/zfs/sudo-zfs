@@ -1,0 +1,16 @@
+# Cmnd alias specification
+Cmnd_Alias C_ZFS = \
+  /sbin/zfs "", /sbin/zfs help *, \
+   /sbin/zfs get, /sbin/zfs get *, \
+   /sbin/zfs recieve *, \
+   /sbin/zfs list, /sbin/zfs list *, \
+   /sbin/zpool "", /sbin/zpool help *, \
+   /sbin/zpool iostat, /sbin/zpool iostat *, \
+   /sbin/zpool list, /sbin/zpool list *, \
+   /sbin/zpool status, /sbin/zpool status *
+
+# User privilege specification
+root ALL=(ALL) ALL
+
+# allow any user to use basic read-only ZFS commands
+ALL ALL = (ALL) NOPASSWD: C_ZFS

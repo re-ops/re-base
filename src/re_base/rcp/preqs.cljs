@@ -14,7 +14,7 @@
   (let [dest (<< "~{home}/.gitconfig")]
     (->
      (package "git")
-     (template git "resources/gitconfig.mustache" dest)
+     (template git "resources/git/gitconfig.mustache" dest)
      (summary "git setup"))))
 
 (defn barbecue
