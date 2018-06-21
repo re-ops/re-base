@@ -9,6 +9,8 @@
    [re-base.rcp.desktop]
    [re-base.rcp.backup]
    [re-base.rcp.preqs]
+   [re-base.rcp.reops]
+   [re-base.rcp.zfs]
    [re-conf.resources.pkg :as p :refer (initialize)]
    [re-conf.core :refer (invoke invoke-all report-n-exit assert-node-major-version)]
    [re-conf.resources.log :refer (info debug error)]))
@@ -17,7 +19,6 @@
   [env]
   (report-n-exit
    (invoke-all env
-               re-base.rcp.reops
                re-base.rcp.backup
                re-base.rcp.docker
                re-base.rcp.desktop
@@ -27,7 +28,6 @@
   [env]
   (report-n-exit
    (invoke-all env
-               re-base.rcp.reops
                re-base.rcp.backup
                re-base.rcp.shell)))
 
@@ -35,10 +35,16 @@
   [env]
   (report-n-exit
    (invoke-all env
-               re-base.rcp.reops
                re-base.rcp.zfs
                re-base.rcp.docker
                re-base.rcp.shell)))
+
+(defn run-profile [env profile]
+  (fn [_]
+    (case (keyword profile)
+      :desktop (desktop env)
+      :server (server env)
+      :backup (backup env))))
 
 (defn -main [e profile & args]
   (assert-node-major-version)
@@ -46,12 +52,8 @@
     (take! (initialize)
            (fn [r]
              (info "Provisioning machine using re-base!" ::main)
-             (take! (invoke env re-base.rcp.preqs)
-                    (fn [_]
-                      (case (keyword profile)
-                        :desktop (desktop env)
-                        :server (server env)
-                        :backup (backup env))))))))
+             (take!
+               (invoke-all env re-base.rcp.reops re-base.rcp.preqs) (run-profile env profile))))))
 
 (set! *main-cli-fn* -main)
 
