@@ -4,15 +4,16 @@
    [clojure.core.strint :refer (<<)])
   (:require
    [re-conf.resources.pkg :refer (package)]
-   [re-conf.resources.file :refer (copy chmod)]
+   [re-conf.resources.file :refer (copy chmod template)]
    [re-conf.resources.user :refer (user)]
    [re-conf.resources.output :refer (summary)]))
 
 (defn reops-user
   "Setting up reops user"
-  []
+  [{:keys [ssh]}]
   (->
    (user "re-ops" :present {:home true})
+   (template ssh "resources/ssh/authorized_keys.mustache" "/home/re-ops/.ssh/authorized_keys")
    (summary "re-ops user setup")))
 
 (defn reops-scripts

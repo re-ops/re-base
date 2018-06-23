@@ -6,4 +6,10 @@
     :user "ronen"
     :email "narkisr.com"
   }
+  :ssh {
+   :keys [
+     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDHFzAjZyAlqxR0NyP5b69Vjkca4t0F48iyDoxWGeMNcEm2q1MO1sNugdpaR6DvoBiVPf8WqIrLFsQVm/2W+oBxolKAlkfSnVsenEt9xInA610VxZyiWFO0/7GMnqevTFLnxt2SxM1ixCB8/E1NIOOWjyMOcJqIkvnR6EGrK2G1ZgrbYerli8JSapsr1NGLeiWNsZCHO1YxOmtv1JpeqgD36169q//gYjg1rt902IxZMUEul5vLgPV9YcgStlYtT2Rwzxzo+uyoLHl3jK5V7uKu6VFwdhGr0UtRIdIa67EmgS3t2UTvqNJUV8H1qgAjzB2HGIEkAfWXrt8/60whdsmp"
+     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCWTtDGbwNf6AUKtfP8eaT9RTNG84j4FFF8b6KIw1XSAjQYq25pNSr6+tFynzbhUnw5+hfHufYIDhpiwMF48cTpdmO5HX/AdBOpqcFSUYPpLj3Uw7G4GW9wqcxOMtpVk5/QbzAOdHY1wyhExSefXowKuDihiQQ/lt2mghVe43z7tvowpYaXQHfzWSmf+sA2/XMrbA/T7Oc3BLq9smR2sv+hmwtVwC/IfsVm7W1m1SWqiTl1n62iLuKg5tm3rWZa9B4Lev2Xu6Qu6tLqjJ1fupizgUsYHbV+Cj7na3h4FOgENZMNgwf2FLvAA7090rG8ey+SA4iOBSHok4PPHa2BXQ2b"
+    ]
+  }
 }
