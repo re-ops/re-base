@@ -53,7 +53,7 @@
            (fn [r]
              (info "Provisioning machine using re-base!" ::main)
              (take!
-               (invoke-all env re-base.rcp.reops re-base.rcp.preqs) (run-profile env profile))))))
+              (invoke-all env re-base.rcp.reops re-base.rcp.preqs) (run-profile env profile))))))
 
 (set! *main-cli-fn* -main)
 
