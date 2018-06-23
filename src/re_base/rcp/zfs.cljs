@@ -1,4 +1,4 @@
-(ns re_base.rcp.zfs
+(ns re-base.rcp.zfs
   "Setting up ZFS filesystem"
   (:require-macros
    [clojure.core.strint :refer (<<)])
