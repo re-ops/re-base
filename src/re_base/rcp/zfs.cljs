@@ -13,6 +13,7 @@
   []
   (->
    (package "zfsutils-linux")
+   (copy "resources/zfs/sudo-zfs" "/etc/sudoers.d/zfs")
    (copy "resources/zfs/zfs.conf" "/etc/modprobe.d/zfs.conf")
    (summary "zfs tunning done")))
 
@@ -22,7 +23,6 @@
   []
   (->
    (copy "resources/zfs/zfs.conf" "/etc/modprobe.d/zfs.conf")
-   (copy "resources/zfs/sudo-zfs" "/etc/sudoers.d/zfs")
    (copy "resources/zfs/91-zfs-permissions.rules" "/etc/udev/rules.d/91-zfs-permissions.rules")
    (user "zfs" :present {:home false})
    (summary "zfs user done")))
