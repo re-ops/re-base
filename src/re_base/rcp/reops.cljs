@@ -32,4 +32,5 @@
   []
   (->
    (package "openjdk-8-jre-headless" :present)
+   (package "sysstat" :present)
    (summary "re-ops scripts")))
