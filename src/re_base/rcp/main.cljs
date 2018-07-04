@@ -4,6 +4,7 @@
   (:require
    [cljs.core.async :as async :refer [take!]]
    [cljs-node-io.core :as io]
+   [re-base.rcp.vim]
    [re-base.rcp.shell]
    [re-base.rcp.docker]
    [re-base.rcp.desktop]
@@ -19,6 +20,7 @@
   [env]
   (report-n-exit
    (invoke-all env
+               re-base.rcp.vim
                re-base.rcp.backup
                re-base.rcp.docker
                re-base.rcp.desktop
@@ -35,6 +37,7 @@
   [env]
   (report-n-exit
    (invoke-all env
+               re-base.rcp.vim
                re-base.rcp.zfs
                re-base.rcp.docker
                re-base.rcp.shell)))
