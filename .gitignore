@@ -7,3 +7,4 @@ figwheel_server.log
 re-conf.log
 .nrepl-port
 main.js
+resources/prod.edn
