@@ -4,6 +4,7 @@
    [re-conf.resources.download :refer (download checksum)]
    [re-conf.resources.archive :refer (unzip)]
    [re-conf.resources.shell :refer (exec)]
+   [re-conf.resources.file :refer (chmod)]
    [re-conf.resources.output :refer (summary)]))
 
 (defn packer
@@ -17,3 +18,13 @@
      (checksum dest sha :sha256)
      (unzip dest "/tmp/packger")
      (summary "installing packer done"))))
+
+(defn lein
+  "Setting up lein"
+  []
+  (let [dest "/usr/local/bin/lein"
+        url "https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein"]
+    (->
+     (download url dest)
+     (chmod dest 777)
+     (summary "lein done"))))
