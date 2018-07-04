@@ -45,7 +45,7 @@
      (untar dest bundle)
      (chown bundle uid gid)
      (exec "/usr/bin/rsync" "-a" "--delete"
-        (<< "~{bundle}/snipmate-snippets") (<< "{bundle}/snipmate/snippets"))
+           (<< "~{bundle}/snipmate-snippets") (<< "{bundle}/snipmate/snippets"))
      (summary "vim bundle done"))))
 
 (defn powerline
