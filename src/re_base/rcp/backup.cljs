@@ -32,7 +32,7 @@
   "Setting up Octo"
   []
   (->
-   (package "openjdk-8-jre" :present)
+   (package "openjdk-8-jre-headless" :present)
    (package "octo" :present)
    (summary "octo setup")))
 
