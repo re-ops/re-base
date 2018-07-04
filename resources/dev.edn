@@ -1,7 +1,4 @@
 {
-  :user "re-ops"
-  :gid 1000
-  :uid 1000
   :git {
     :user "ronen"
     :email "narkisr.com"
@@ -14,6 +11,23 @@
      {:key "AAAAB3NzaC1yc2EAAAADAQABAAABAQCWTtDGbwNf6AUKtfP8eaT9RTNG84j4FFF8b6KIw1XSAjQYq25pNSr6+tFynzbhUnw5+hfHufYIDhpiwMF48cTpdmO5HX/AdBOpqcFSUYPpLj3Uw7G4GW9wqcxOMtpVk5/QbzAOdHY1wyhExSefXowKuDihiQQ/lt2mghVe43z7tvowpYaXQHfzWSmf+sA2/XMrbA/T7Oc3BLq9smR2sv+hmwtVwC/IfsVm7W1m1SWqiTl1n62iLuKg5tm3rWZa9B4Lev2Xu6Qu6tLqjJ1fupizgUsYHbV+Cj7na3h4FOgENZMNgwf2FLvAA7090rG8ey+SA4iOBSHok4PPHa2BXQ2b"
       :user ""
       }
+      {:key "AAAAB3NzaC1yc2EAAAADAQABAAABAQDJVBb0VCMh1GAOjWlL1J9ZjHIkEgQ+ciTULqa2LPNz2O5PBFboSgcWZQukpYuXkLqJy3z4BwPs97mT7+88Pkd6jVlef00b/QZTPCvGLLFL/GXeNgr9yX/J0Zt6bd6tl5qCgaz/gCv8ZQvh4MiT5ZvX2k2WhfbJvD6Lovada56/xoLwDlypceS9ULoQuR0qfna9FPEiNQMBJ7XUZ7k3Rd5u34cs+EVtzTUC1iyhhIhOsBYmJRD/2ASB3U5oNkpctMHqLkIVJl7LIPIw2gtUHDotpsco0RAkLZjt8CFfT6ofpeJpdCivwvzONii+0pV09or1LPDUslZmJYkAYvW5VV+T"
+      :user ""
+      }
     ]
+  }
+
+  :users {
+    :main {
+      :name "re-ops"
+      :uid 1000
+      :gid 1000
+    }
+    :reops {
+      :name "re-ops"
+      :uid 1000
+      :gid 1000
+    }
+
   }
 }
