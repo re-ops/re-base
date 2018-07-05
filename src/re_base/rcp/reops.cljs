@@ -14,10 +14,10 @@
   (let [{:keys [gid uid name]} (:re-ops users)
         home (<< "/home/~{name}")]
     (->
-     (user "re-ops" :present {:home true :uid uid :gid gid})
+     (user name :present {:home true :uid uid :gid gid})
      (template ssh "resources/ssh/authorized_keys.mustache" (<< "~{home}/.ssh/authorized_keys"))
-     (chmod (<< "~{home}/.ssh/authorized_keys") 600)
-     (chmod (<< "~{home}/.ssh/") 700)
+     (chmod (<< "~{home}/.ssh/authorized_keys") 0600)
+     (chmod (<< "~{home}/.ssh/") 0700)
      (chown (<< "~{home}/.ssh/") uid gid)
      (chown (<< "~{home}/.ssh/authorized_keys") uid gid)
      (summary "re-ops user done"))))
