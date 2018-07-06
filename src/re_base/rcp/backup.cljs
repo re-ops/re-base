@@ -10,7 +10,7 @@
    [re-conf.resources.facts :refer (desktop?)]
    [re-conf.resources.file :refer (directory symlink chmod rename)]
    [re-conf.resources.archive :refer (bzip2 untar)]
-   [re-conf.resources.shell :refer (exec unless)]
+   [re-conf.resources.shell :refer (unless)]
    [re-conf.resources.output :refer (summary)]))
 
 (defn restic
