@@ -14,7 +14,7 @@
   (let [dest (<< "~{home}/.gitconfig")]
     (->
      (package "git")
-     (directory home)
+     (directory home :present)
      (template git "resources/git/gitconfig.mustache" dest)
      (summary "git setup"))))
 
