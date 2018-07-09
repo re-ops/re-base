@@ -40,6 +40,7 @@
         sha "497e82187930f010e9231abe2d581f3c339dad41400c24abc058fb320cff5f08"]
     (->
      (directory dot :present)
+     (directory bundle :present)
      (download url dest)
      (checksum dest sha :sha256)
      (untar dest bundle)
