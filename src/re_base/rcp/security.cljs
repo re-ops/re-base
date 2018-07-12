@@ -3,14 +3,14 @@
   (:require-macros
    [clojure.core.strint :refer (<<)])
   (:require
-   [re-base.rcp.hardening :refer (server-harden desktop-harden)]
+   [re-base.rcp.hardening :as hard]
    [re-conf.resources.facts :refer (desktop?)]
    [re-conf.resources.pkg :refer (package)]
    [re-conf.resources.shell :refer (exec unless)]
    [re-conf.resources.output :refer (summary)]))
 
-(defn packages
-  "Security utilities"
+(defn security-tools
+  "security tools"
   []
   (->
    (package "pwgen")
@@ -18,11 +18,13 @@
    (package "veracrypt")
    (package "pass")
    (package "nmap")
-   (summary "Security packages done")))
+   (summary "security tools done")))
 
 (defn hardening
   "Harden os"
-  []
+  [{:keys [public]}]
   (if (desktop?)
-    (desktop-harden)
-    (server-harden)))
+    (hard/desktop)
+    (if public
+      (hard/public)
+      (hard/server))))

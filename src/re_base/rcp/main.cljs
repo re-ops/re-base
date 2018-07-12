@@ -11,6 +11,7 @@
    [re-base.rcp.backup]
    [re-base.rcp.preqs]
    [re-base.rcp.reops]
+   [re-base.rcp.security]
    [re-base.rcp.zfs]
    [re-conf.resources.pkg :as p :refer (initialize)]
    [re-conf.core :refer (invoke invoke-all report-n-exit assert-node-major-version)]
@@ -42,11 +43,20 @@
                re-base.rcp.docker
                re-base.rcp.shell)))
 
+(defn public
+  [env]
+  (report-n-exit
+   (invoke-all env
+               re-base.rcp.vim
+               re-base.rcp.shell
+               re-base.rcp.security)))
+
 (defn run-profile [env profile]
   (fn [_]
     (case (keyword profile)
       :desktop (desktop env)
       :server (server env)
+      :public (public env)
       :backup (backup env))))
 
 (defn -main [e profile & args]
