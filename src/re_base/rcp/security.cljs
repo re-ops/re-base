@@ -14,7 +14,6 @@
   []
   (->
    (package "pwgen")
-   (package "sshfs")
    (package "rng-tools")
    (package "veracrypt")
    (package "pass")
