@@ -22,9 +22,9 @@
 
 (defn hardening
   "Harden os"
-  [{:keys [public]}]
+  [{:keys [public] :as env}]
   (if (desktop?)
     (hard/desktop)
     (if public
-      (hard/public)
+      (hard/public env)
       (hard/server))))
