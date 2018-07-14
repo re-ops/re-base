@@ -1,4 +1,6 @@
 {
+  :public true
+
   :git {
     :user "ronen"
     :email "narkisr.com"
@@ -31,6 +33,11 @@
       :uid 1000
       :gid 1000
     }
-
+  }
+  :email {
+    :address "narkisr@gmail.com"
+    :domain "gmail.com"
+    :user "foo"
+    :password "1234"
   }
 }
