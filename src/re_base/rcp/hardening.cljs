@@ -10,25 +10,19 @@
 (defn network
   "Hardening network"
   []
-  (->
-   (copy "resources/networking/harden.conf" "/etc/sysctl.d/10-network-hardening.conf")
-   (exec "/usr/sbin/ufw" "allow" "22")
-   (exec "/sbin/sysctl" "-p")
-   (exec "/usr/sbin/ufw" "--force" "enable")
-   (summary "network harden done")))
-
-(defn denyhosts
-  "Block ssh scanners"
-  []
-  (->
-   (package "denyhosts" :present)
-   (summary "denyhosts setup done")))
+  (let [target "/etc/sysctl.d/10-network-hardening.conf"]
+    (->
+     (copy "resources/networking/harden.conf" target)
+     (exec "/usr/sbin/ufw" "allow" "22")
+     (exec "/sbin/sysctl" "-p" target)
+     (exec "/usr/sbin/ufw" "--force" "enable")
+     (summary "network harden done"))))
 
 (defn logwatch
   "Setting up logwatch"
-  [{:keys [email]}]
+  [c {:keys [email]}]
   (->
-   (package "ssmtp" :present)
+   (package c "ssmtp" :present)
    (package "logwatch" :present)
    (template email "resources/logwatch/ssmtp.mustache" "/etc/ssmtp/ssmtp.conf")
    (summary "logwatch setup done")))
@@ -55,7 +49,6 @@
   "Interet facing server hardening"
   [env]
   (->
-   (logwatch env)
-   (denyhosts)
    (common)
+   (logwatch env)
    (summary "public hardening done")))
