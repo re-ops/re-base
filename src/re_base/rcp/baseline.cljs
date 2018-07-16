@@ -3,6 +3,7 @@
   (:require-macros
    [clojure.core.strint :refer (<<)])
   (:require
+   [re-conf.resources.output :refer (summary)]
    [re-conf.resources.pkg :refer (package)]
    [re-conf.resources.download :refer (download)]))
 
