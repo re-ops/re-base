@@ -4,8 +4,18 @@
    [re-conf.resources.shell :refer (exec)]
    [re-conf.resources.pkg :refer (package)]
    [re-conf.resources.service :refer (service)]
-   [re-conf.resources.file :refer (template copy)]
+   [re-conf.resources.file :refer (template copy edit line)]
    [re-conf.resources.output :refer (summary)]))
+
+(defn sshd
+  "harden ssh configuration"
+  [c]
+  (->
+   (edit c "/etc/ssh/sshd_config" "PermitRootLogin" "no" " ")
+   (edit "/etc/ssh/sshd_config" "PasswordAuthentication" "no" " ")
+   (edit "/etc/ssh/sshd_config" "X11Forwarding" "no" " ")
+   (line "/etc/ssh/sshd_config" "\nUseDns no" :present)
+   (service "ssh" :restart)))
 
 (defn network
   "Hardening network"
@@ -14,8 +24,8 @@
     (->
      (copy "resources/networking/harden.conf" target)
      (exec "/usr/sbin/ufw" "allow" "22")
-     (exec "/sbin/sysctl" "-p" target)
      (exec "/usr/sbin/ufw" "--force" "enable")
+     (exec "/sbin/sysctl" "-p" target)
      (summary "network harden done"))))
 
 (defn logwatch
@@ -51,4 +61,5 @@
   (->
    (common)
    (logwatch env)
+   (sshd)
    (summary "public hardening done")))
