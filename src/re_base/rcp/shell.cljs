@@ -6,7 +6,8 @@
    [re-base.common :refer (dots)]
    [re-conf.resources.pkg :refer (package)]
    [re-conf.resources.shell :refer (unless)]
-   [re-conf.resources.file :refer (chown directory symlink contains)]
+   [re-conf.spec.file :refer (contains)]
+   [re-conf.resources.file :refer (chown directory symlink)]
    [re-conf.resources.git :refer (clone)]
    [re-conf.resources.shell :refer (exec)]
    [re-conf.resources.output :refer (summary)]))

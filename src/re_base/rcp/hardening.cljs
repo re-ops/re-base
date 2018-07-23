@@ -4,16 +4,16 @@
    [re-conf.resources.shell :refer (exec)]
    [re-conf.resources.pkg :refer (package)]
    [re-conf.resources.service :refer (service)]
-   [re-conf.resources.file :refer (template copy edit line)]
+   [re-conf.resources.file :refer (template copy line)]
    [re-conf.resources.output :refer (summary)]))
 
 (defn sshd
   "harden ssh configuration"
   [c]
   (->
-   (edit c "/etc/ssh/sshd_config" "PermitRootLogin" "no" " ")
-   (edit "/etc/ssh/sshd_config" "PasswordAuthentication" "no" " ")
-   (edit "/etc/ssh/sshd_config" "X11Forwarding" "no" " ")
+   (line c "/etc/ssh/sshd_config" "PermitRootLogin" "no" " " :set)
+   (line "/etc/ssh/sshd_config" "PasswordAuthentication" "no" " " :set)
+   (line "/etc/ssh/sshd_config" "X11Forwarding" "no" " " :set)
    (line "/etc/ssh/sshd_config" "\nUseDns no" :present)
    (service "ssh" :restart)))
 
