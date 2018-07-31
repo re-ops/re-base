@@ -9,3 +9,5 @@
 * ZSH change shell for main user not working
 
 * Dropbox nautilus not installed
+
+* veracrypt
