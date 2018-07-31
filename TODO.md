@@ -11,3 +11,5 @@
 * Dropbox nautilus not installed
 
 * veracrypt
+
+* rm -rf Public/ Pictures/ Templates/ Videos/
