@@ -27,12 +27,12 @@
 
 (defn zsh
   "zsh setup"
-  [{:keys [home user]}]
-  (let [dest (<< "~{home}/.tmux")]
+  [{:keys [home users]}]
+  (let [dest (<< "~{home}/.tmux") {:keys [name]} (users :main)]
     (->
      (package "zsh")
-     (contains "/etc/passwd" "re-ops:/bin/zsh")
-     (unless "/usr/bin/chsh" "-s" "/usr/bin/zsh" user)
+     (contains "/etc/passwd" (<< "~{name}:/bin/zsh"))
+     (unless "/usr/bin/chsh" "-s" "/usr/bin/zsh" name)
      (summary "zsh setup done"))))
 
 (defn oh-my-zsh
