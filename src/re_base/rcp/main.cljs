@@ -25,6 +25,7 @@
                re-base.rcp.backup
                re-base.rcp.docker
                re-base.rcp.desktop
+               re-base.rcp.security
                re-base.rcp.shell)))
 
 (defn backup
