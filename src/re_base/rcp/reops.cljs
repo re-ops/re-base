@@ -4,7 +4,7 @@
    [clojure.core.strint :refer (<<)])
   (:require
    [re-conf.resources.pkg :refer (package)]
-   [re-conf.resources.file :refer (copy chmod template chown)]
+   [re-conf.resources.file :refer (copy directory chmod template chown)]
    [re-conf.resources.user :refer (user)]
    [re-conf.resources.output :refer (summary)]))
 
@@ -15,6 +15,7 @@
         home (<< "/home/~{name}")]
     (->
      (user name :present {:home true :uid uid :gid gid})
+     (directory (<< "~{home}/.ssh/") :present)
      (template ssh "resources/ssh/authorized_keys.mustache" (<< "~{home}/.ssh/authorized_keys"))
      (chmod (<< "~{home}/.ssh/authorized_keys") 0600)
      (chmod (<< "~{home}/.ssh/") 0700)
