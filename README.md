@@ -4,28 +4,17 @@ Re-base is a collection of recipes that use Re-conf for provisioning desktop and
 
 [![Build Status](https://travis-ci.org/re-ops/re-base.png)](https://travis-ci.org/re-ops/re-base)
 
-# Development
+
+# Usage
 
 ```bash
-$ lein npm install
+$ lein cljsbuild once prod
 ```
 
-## VIM
+Provision:
 
 ```bash
-$ lein repl
-```
-
-Using a second window:
-
-```bash
-$ node target/js/compiled/shim.js
-```
-
-In the VIM session:
-
-```bash
-:Piggieback (figwheel-sidecar.repl-api/repl-env)
+$ sudo node main.js resources/{environment}.edn {profile}
 ```
 
 # Copyright and license
