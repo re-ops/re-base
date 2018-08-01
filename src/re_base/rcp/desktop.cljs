@@ -31,8 +31,9 @@
 
 (defn xfce
   [{:keys [home]}]
-  (let [shortcuts "resources/xfce/xfce4-keyboard-shortcuts.xml"
-        dest ".config/xfce4/xfconf/xfce-perchannel-xml/"]
+  (let [file "xfce4-keyboard-shortcuts.xml"
+        shortcuts (<< "resources/xfce/~{file}")
+        dest (<< "~{home}/.config/xfce4/xfconf/xfce-perchannel-xml/~{file}")]
     (->
      (copy shortcuts dest)
      (directory "~{home}/Public" :absent)
