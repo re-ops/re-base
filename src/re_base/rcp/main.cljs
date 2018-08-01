@@ -60,9 +60,23 @@
       :public (public env)
       :backup (backup env))))
 
+(defn- home
+  "Add home to the env"
+  [{:keys [users] :as m}]
+  (let [{:keys [name]} (users :main)]
+    (assoc m :home (<< "/home/~{name}"))))
+
+(defn- main-user
+  "Add main user to env root"
+  [{:keys [users] :as m}]
+  (merge m (users :main)))
+
+(defn enrich [env]
+  (-> env home main-user))
+
 (defn -main [e profile & args]
   (assert-node-major-version)
-  (let [env (if e (cljs.reader/read-string (io/slurp e)) {})]
+  (let [env (if e (enrich (cljs.reader/read-string (io/slurp e))) {})]
     (take! (initialize)
            (fn [r]
              (info "Provisioning machine using re-base!" ::main)
