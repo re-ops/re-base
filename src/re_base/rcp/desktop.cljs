@@ -7,7 +7,7 @@
    [re-conf.resources.git :refer (clone)]
    [re-conf.resources.shell :refer (exec)]
    [re-conf.resources.download :refer (download)]
-   [re-conf.resources.file :refer (chown)]
+   [re-conf.resources.file :refer (chown copy directory)]
    [re-conf.resources.pkg :refer (package add-repo)]
    [re-conf.resources.output :refer (summary)]))
 
@@ -23,8 +23,20 @@
 
 (defn xmonad [{:keys [home uid gid]}]
   (->
-   (package "xmonad" "ghc" "libghc-xmonad-contrib-dev")
+   (package "xmonad" "ghc" "libghc-xmonad-contrib-dev" "gnome-terminal")
    (clone "git://github.com/narkisr/xmonad-config.git" (<< "~{home}/.xmonad"))
    (chown (<< "~{home}/.xmonad") uid gid)
    (exec "/usr/bin/xmonad" "--recompile" :uid uid)
    (summary "xmonad setup")))
+
+(defn xfce
+  [{:keys [home]}]
+  (let [shortcuts "resources/xfce/xfce4-keyboard-shortcuts.xml"
+        dest ".config/xfce4/xfconf/xfce-perchannel-xml/"]
+    (->
+     (copy shortcuts dest)
+     (directory "~{home}/Public" :absent)
+     (directory "~{home}/Pictures" :absent)
+     (directory "~{home}/Templates" :absent)
+     (directory "~{home}/Videos" :absent)
+     (summary "xfce setup done"))))
