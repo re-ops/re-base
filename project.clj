@@ -31,6 +31,7 @@
 
   :plugins [[lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]
             [lein-figwheel "0.5.14"]
+            [lein-shell "0.5.0"]
             [lein-cljfmt "0.5.7"]
             [lein-tag "0.1.0"]
             [lein-npm "0.6.2"]]
@@ -79,5 +80,8 @@
     :aliases {
        "travis" [
          "do" "clean," "cljfmt" "check," "npm" "install," "cljsbuild" "once" "prod"]
+       "package" [
+         "shell" "tar" "-czf" "re-base.tar.gz" "--exclude" "prod.edn" "target/js/compiled/prod" "node_modules" "resources"
+       ]
     }
 )
