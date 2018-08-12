@@ -55,21 +55,20 @@
 (defn re-ops
   [env]
   (report-n-exit
-   (invoke-all env re-base.rcp.reops)))
+   (invoke-all env re-base.recipes.reops)))
 
 (defn with-preqs
   [profile env]
   (take!
-   (invoke-all env re-base.rcp.preqs) (profile env)))
+   (invoke-all env re-base.recipes.preqs) (fn [_] (profile env))))
 
 (defn run-profile [env profile]
-  (fn [_]
-    (case (keyword profile)
-      :desktop (with-preqs desktop env)
-      :server  (with-preqs server env)
-      :public  (with-preqs public env)
-      :backup  (with-preqs backup env)
-      :re-ops  (re-ops env))))
+  (case (keyword profile)
+    :desktop (with-preqs desktop env)
+    :server  (with-preqs server env)
+    :public  (with-preqs public env)
+    :backup  (with-preqs backup env)
+    :re-ops  (re-ops env)))
 
 (defn- home
   "Add home to the env"
