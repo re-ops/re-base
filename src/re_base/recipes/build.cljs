@@ -4,7 +4,7 @@
    [re-conf.resources.download :refer (download checksum)]
    [re-conf.resources.archive :refer (unzip)]
    [re-conf.resources.shell :refer (exec)]
-   [re-conf.resources.file :refer (chmod)]
+   [re-conf.resources.file :refer (chmod symlink)]
    [re-conf.resources.output :refer (summary)]))
 
 (defn packer
@@ -16,7 +16,8 @@
     (->
      (download url dest)
      (checksum dest sha :sha256)
-     (unzip dest "/tmp/packger")
+     (unzip dest "/opt/packer")
+     (symlink "/opt/packer/packer" "/usr/local/bin/packer" :present)
      (summary "installing packer done"))))
 
 (defn lein
