@@ -26,5 +26,5 @@
         url "https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein"]
     (->
      (download url dest)
-     (chmod dest 777)
+     (chmod dest "0777")
      (summary "lein done"))))
