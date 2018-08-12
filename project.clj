@@ -81,7 +81,7 @@
        "travis" [
          "do" "clean," "cljfmt" "check," "npm" "install," "cljsbuild" "once" "prod"]
        "package" [
-         "shell" "tar" "-czf" "re-base.tar.gz" "--exclude" "prod.edn" "target/js/compiled/prod" "node_modules" "resources"
+         "shell" "tar" "-czf" "re-base.tar.gz" "--exclude" "prod.edn" "target/js/compiled/prod" "node_modules" "resources" "main.js"
        ]
     }
 )

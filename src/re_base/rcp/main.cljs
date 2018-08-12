@@ -52,13 +52,24 @@
                re-base.rcp.shell
                re-base.rcp.security)))
 
+(defn re-ops
+  [env]
+  (report-n-exit
+   (invoke-all env re-base.rcp.reops)))
+
+(defn with-preqs
+  [profile env]
+  (take!
+   (invoke-all env re-base.rcp.preqs) (profile env)))
+
 (defn run-profile [env profile]
   (fn [_]
     (case (keyword profile)
-      :desktop (desktop env)
-      :server (server env)
-      :public (public env)
-      :backup (backup env))))
+      :desktop (with-preqs desktop env)
+      :server  (with-preqs server env)
+      :public  (with-preqs public env)
+      :backup  (with-preqs backup env)
+      :re-ops  (re-ops env))))
 
 (defn- home
   "Add home to the env"
@@ -80,8 +91,7 @@
     (take! (initialize)
            (fn [r]
              (info "Provisioning machine using re-base!" ::main)
-             (take!
-              (invoke-all env re-base.rcp.reops re-base.rcp.preqs) (run-profile env profile))))))
+             (run-profile env profile)))))
 
 (set! *main-cli-fn* -main)
 
