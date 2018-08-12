@@ -1,4 +1,4 @@
-(ns re-base.rcp.dropbox
+(ns re-base.recipes.dropbox
   "Setting up dropbox"
   (:require-macros
    [clojure.core.strint :refer (<<)])

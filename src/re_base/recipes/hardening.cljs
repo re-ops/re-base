@@ -1,4 +1,4 @@
-(ns re-base.rcp.hardening
+(ns re-base.recipes.hardening
   "Common hardening"
   (:require
    [re-conf.resources.shell :refer (exec)]

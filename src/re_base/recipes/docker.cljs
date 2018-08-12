@@ -1,4 +1,4 @@
-(ns re-base.rcp.docker
+(ns re-base.recipes.docker
   "Docker setup and configuration"
   (:require-macros
    [clojure.core.strint :refer (<<)])

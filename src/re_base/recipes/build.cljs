@@ -1,4 +1,4 @@
-(ns re-base.rcp.build
+(ns re-base.recipes.build
   "build tools recipes"
   (:require
    [re-conf.resources.download :refer (download checksum)]

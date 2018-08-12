@@ -1,4 +1,4 @@
-(ns re-base.rcp.basic
+(ns re-base.recipes.basic
   "Basic setup"
   (:require
    [re-conf.resources.download :refer (download checksum)]

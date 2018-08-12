@@ -1,4 +1,4 @@
-(ns re-base.rcp.reops
+(ns re-base.recipes.reops
   "Setting up re-ops access and agent"
   (:require-macros
    [clojure.core.strint :refer (<<)])

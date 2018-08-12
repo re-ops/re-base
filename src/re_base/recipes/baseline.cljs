@@ -1,4 +1,4 @@
-(ns re-base.rcp.baseline
+(ns re-base.recipes.baseline
   "Common tools"
   (:require-macros
    [clojure.core.strint :refer (<<)])

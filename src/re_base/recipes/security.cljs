@@ -1,9 +1,9 @@
-(ns re-base.rcp.security
+(ns re-base.recipes.security
   "Security utilities"
   (:require-macros
    [clojure.core.strint :refer (<<)])
   (:require
-   [re-base.rcp.hardening :as hard]
+   [re-base.recipes.hardening :as hard]
    [re-conf.resources.facts :refer (desktop?)]
    [re-conf.resources.pkg :refer (package)]
    [re-conf.resources.shell :refer (exec unless)]

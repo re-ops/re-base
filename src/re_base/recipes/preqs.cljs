@@ -1,4 +1,4 @@
-(ns re-base.rcp.preqs
+(ns re-base.recipes.preqs
   "Resource prerequisites"
   (:refer-clojure :exclude [update remove])
   (:require-macros

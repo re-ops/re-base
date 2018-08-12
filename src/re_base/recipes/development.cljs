@@ -1,4 +1,4 @@
-(ns re-base.rcp.development
+(ns re-base.recipes.development
   "Setting up dev tools"
   (:require-macros
    [clojure.core.strint :refer (<<)])

@@ -1,10 +1,10 @@
-(ns re-base.rcp.backup
+(ns re-base.recipes.backup
   "Backup utilities recipes"
   (:require-macros
    [clojure.core.strint :refer (<<)])
   (:refer-clojure :exclude [update remove])
   (:require
-   [re-base.rcp.dropbox :refer (dropbox-desktop dropbox-headless)]
+   [re-base.recipes.dropbox :refer (dropbox-desktop dropbox-headless)]
    [re-conf.resources.pkg :refer (package repository key-server update)]
    [re-conf.resources.download :refer (download)]
    [re-conf.resources.facts :refer (desktop?)]

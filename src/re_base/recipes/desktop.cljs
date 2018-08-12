@@ -1,4 +1,4 @@
-(ns re-base.rcp.desktop
+(ns re-base.recipes.desktop
   "Desktop setup"
   (:require-macros
    [clojure.core.strint :refer (<<)])

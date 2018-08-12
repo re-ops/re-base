@@ -1,18 +1,18 @@
-(ns re-base.rcp.main
+(ns re-base.recipes.main
   (:require-macros
    [clojure.core.strint :refer (<<)])
   (:require
    [cljs.core.async :as async :refer [take!]]
    [cljs-node-io.core :as io]
-   [re-base.rcp.vim]
-   [re-base.rcp.shell]
-   [re-base.rcp.docker]
-   [re-base.rcp.desktop]
-   [re-base.rcp.backup]
-   [re-base.rcp.preqs]
-   [re-base.rcp.reops]
-   [re-base.rcp.security]
-   [re-base.rcp.zfs]
+   [re-base.recipes.vim]
+   [re-base.recipes.shell]
+   [re-base.recipes.docker]
+   [re-base.recipes.desktop]
+   [re-base.recipes.backup]
+   [re-base.recipes.preqs]
+   [re-base.recipes.reops]
+   [re-base.recipes.security]
+   [re-base.recipes.zfs]
    [re-conf.resources.pkg :as p :refer (initialize)]
    [re-conf.core :refer (invoke invoke-all report-n-exit assert-node-major-version)]
    [re-conf.resources.log :refer (info debug error)]))
@@ -21,36 +21,36 @@
   [env]
   (report-n-exit
    (invoke-all env
-               re-base.rcp.vim
-               re-base.rcp.backup
-               re-base.rcp.docker
-               re-base.rcp.desktop
-               re-base.rcp.security
-               re-base.rcp.shell)))
+               re-base.recipes.vim
+               re-base.recipes.backup
+               re-base.recipes.docker
+               re-base.recipes.desktop
+               re-base.recipes.security
+               re-base.recipes.shell)))
 
 (defn backup
   [env]
   (report-n-exit
    (invoke-all env
-               re-base.rcp.backup
-               re-base.rcp.shell)))
+               re-base.recipes.backup
+               re-base.recipes.shell)))
 
 (defn server
   [env]
   (report-n-exit
    (invoke-all env
-               re-base.rcp.vim
-               re-base.rcp.zfs
-               re-base.rcp.docker
-               re-base.rcp.shell)))
+               re-base.recipes.vim
+               re-base.recipes.zfs
+               re-base.recipes.docker
+               re-base.recipes.shell)))
 
 (defn public
   [env]
   (report-n-exit
    (invoke-all env
-               re-base.rcp.vim
-               re-base.rcp.shell
-               re-base.rcp.security)))
+               re-base.recipes.vim
+               re-base.recipes.shell
+               re-base.recipes.security)))
 
 (defn run-profile [env profile]
   (fn [_]
@@ -81,7 +81,7 @@
            (fn [r]
              (info "Provisioning machine using re-base!" ::main)
              (take!
-              (invoke-all env re-base.rcp.reops re-base.rcp.preqs) (run-profile env profile))))))
+              (invoke-all env re-base.recipes.reops re-base.recipes.preqs) (run-profile env profile))))))
 
 (set! *main-cli-fn* -main)
 

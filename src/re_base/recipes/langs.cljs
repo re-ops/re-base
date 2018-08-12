@@ -1,4 +1,4 @@
-(ns re-base.rcp.langs
+(ns re-base.recipes.langs
   "Setting up programming launguages"
   (:require-macros
    [clojure.core.strint :refer (<<)])

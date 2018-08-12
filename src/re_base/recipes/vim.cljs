@@ -1,4 +1,4 @@
-(ns re-base.rcp.vim
+(ns re-base.recipes.vim
   "Setting up VIM"
   (:require-macros
    [clojure.core.strint :refer (<<)])
