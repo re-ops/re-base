@@ -5,7 +5,7 @@
   (:require
    [re-conf.resources.pkg :refer (package)]
    [re-conf.resources.file :refer (copy directory chmod template chown)]
-   [re-conf.resources.user :refer (user)]
+   [re-conf.resources.user :refer (user group)]
    [re-conf.resources.output :refer (summary)]))
 
 (defn reops-user
@@ -14,6 +14,7 @@
   (let [{:keys [gid uid name]} (:re-ops users)
         home (<< "/home/~{name}")]
     (->
+     (group name :present {:gid gid})
      (user name :present {:home true :uid uid :gid gid})
      (directory (<< "~{home}/.ssh/") :present)
      (template ssh "resources/ssh/authorized_keys.mustache" (<< "~{home}/.ssh/authorized_keys"))
