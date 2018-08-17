@@ -4,6 +4,7 @@
    [re-conf.resources.shell :refer (exec)]
    [re-conf.resources.pkg :refer (package)]
    [re-conf.resources.service :refer (service)]
+   [re-conf.resources.firewall :refer (rule firewall)]
    [re-conf.resources.file :refer (template copy line)]
    [re-conf.resources.output :refer (summary)]))
 
@@ -23,10 +24,10 @@
   (let [target "/etc/sysctl.d/10-network-hardening.conf"]
     (->
      (copy "resources/networking/harden.conf" target)
-     (exec "/usr/sbin/ufw" "allow" "22")
-     (exec "/usr/sbin/ufw" "--force" "enable")
+     (rule {:port 22})
+     (firewall :present)
      (exec "/sbin/sysctl" "-p" target)
-     (summary "network harden done"))))
+     (summary "network hardening done"))))
 
 (defn logwatch
   "Setting up logwatch"
