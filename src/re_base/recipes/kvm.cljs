@@ -22,7 +22,7 @@
   []
   (let [forward "-I FORWARD -m physdev --physdev-is-bridged -j ACCEPT"]
     (->
-     (exec "/bin/sed" "-i" (<< "'/^COMMIT/i ~{forward}'"))
+     (exec "/bin/sed" "-i" (<< "'/^COMMIT/i ~{forward}'") "/etc/ufw/before.rules" :shell true)
      (service "ufw" :restart)
      (line "/etc/sysctl.conf" "net.bridge.bridge-nf-call-iptables = 0")
      (line "/etc/sysctl.conf" "net.bridge.bridge-nf-call-arptables = 0")
@@ -36,3 +36,4 @@
    (group "libvirtd" :present)
    (exec "/usr/sbin/usermod" "-G" "libvirtd" "-a" (users :main))
    (summary "libvirtd-group done")))
+
