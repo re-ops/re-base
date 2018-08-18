@@ -5,6 +5,7 @@
    [cljs.core.async :as async :refer [take!]]
    [cljs-node-io.core :as io]
    [re-base.recipes.vim]
+   [re-base.recipes.kvm]
    [re-base.recipes.shell]
    [re-base.recipes.build]
    [re-base.recipes.docker]
@@ -25,6 +26,7 @@
                re-base.recipes.vim
                re-base.recipes.backup
                re-base.recipes.build
+               re-base.recipes.kvm
                re-base.recipes.docker
                re-base.recipes.desktop
                re-base.recipes.security
@@ -43,6 +45,7 @@
    (invoke-all env
                re-base.recipes.vim
                re-base.recipes.zfs
+               re-base.recipes.kvm
                re-base.recipes.docker
                re-base.recipes.shell)))
 
