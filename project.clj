@@ -1,4 +1,4 @@
-(defproject re-base "0.3.2"
+(defproject re-base "0.3.3"
   :description "Base recipes"
   :url "https://github.com/re-ops/re-base"
   :license  {:name "Apache License, Version 2.0" :url "http://www.apache.org/licenses/LICENSE-2.0.html"}
