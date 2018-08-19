@@ -22,6 +22,7 @@
      (chmod (<< "~{home}/.ssh/") 0700)
      (chown (<< "~{home}/.ssh/") uid gid)
      (chown (<< "~{home}/.ssh/authorized_keys") uid gid)
+     (copy "resources/reops/re-ops" "/etc/sudoers.d/re-ops")
      (summary "re-ops user done"))))
 
 (defn reops-scripts
