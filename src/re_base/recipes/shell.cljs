@@ -58,7 +58,7 @@
   "ack grep setup"
   [{:keys [home]}]
   (->
-   (package "ack-grep")
+   (package "ack")
    (symlink (<< "~(dots home)/.ackrc") (<< "~{home}/.ackrc") :present)
    (summary "ack setup done")))
 
