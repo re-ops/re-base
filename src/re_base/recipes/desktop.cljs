@@ -4,6 +4,7 @@
    [clojure.core.strint :refer (<<)])
   (:refer-clojure :exclude [update])
   (:require
+   [re-conf.core :refer (apply*)]
    [re-conf.resources.git :refer (clone)]
    [re-conf.resources.shell :refer (exec)]
    [re-conf.resources.download :refer (download)]
@@ -33,11 +34,9 @@
   [{:keys [home]}]
   (let [file "xfce4-keyboard-shortcuts.xml"
         shortcuts (<< "resources/xfce/~{file}")
-        dest (<< "~{home}/.config/xfce4/xfconf/xfce-perchannel-xml/~{file}")]
+        dest (<< "~{home}/.config/xfce4/xfconf/xfce-perchannel-xml/~{file}")
+        cleanup ["Music" "Pictures" "Public" "Templates" "Videos"]]
     (->
      (copy shortcuts dest)
-     (directory "~{home}/Public" :absent)
-     (directory "~{home}/Pictures" :absent)
-     (directory "~{home}/Templates" :absent)
-     (directory "~{home}/Videos" :absent)
+     (apply* directory (fn [d] [(<< "~{home}/~{d}") :absent]) cleanup)
      (summary "xfce setup done"))))

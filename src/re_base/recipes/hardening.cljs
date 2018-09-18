@@ -35,7 +35,7 @@
   (->
    (package c "ssmtp" :present)
    (package "logwatch" :present)
-   (template email "resources/logwatch/ssmtp.mustache" "/etc/ssmtp/ssmtp.conf")
+   (template "resources/logwatch/ssmtp.mustache" "/etc/ssmtp/ssmtp.conf" email)
    (summary "logwatch setup done")))
 
 (defn common

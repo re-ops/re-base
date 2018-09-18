@@ -17,7 +17,7 @@
      (group name :present {:gid gid})
      (user name :present {:home true :uid uid :gid gid})
      (directory (<< "~{home}/.ssh/") :present)
-     (template ssh "resources/ssh/authorized_keys.mustache" (<< "~{home}/.ssh/authorized_keys"))
+     (template "resources/ssh/authorized_keys.mustache" (<< "~{home}/.ssh/authorized_keys") ssh)
      (chmod (<< "~{home}/.ssh/authorized_keys") 0600)
      (chmod (<< "~{home}/.ssh/") 0700)
      (chown (<< "~{home}/.ssh/") uid gid)

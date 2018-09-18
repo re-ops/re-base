@@ -15,7 +15,7 @@
     (->
      (package "git")
      (directory home :present)
-     (template git "resources/git/gitconfig.mustache" dest)
+     (template "resources/git/gitconfig.mustache" dest git)
      (summary "git setup"))))
 
 (defn barbecue
