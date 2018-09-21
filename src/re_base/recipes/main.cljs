@@ -4,6 +4,7 @@
   (:require
    [cljs.core.async :as async :refer [take!]]
    [cljs-node-io.core :as io]
+   [re-conf.cli :refer (parse-options)]
    [re-base.recipes.vim]
    [re-base.recipes.kvm]
    [re-base.recipes.shell]
@@ -15,9 +16,10 @@
    [re-base.recipes.reops]
    [re-base.recipes.security]
    [re-base.recipes.zfs]
-   [re-conf.resources.pkg :as p :refer (initialize)]
+   [re-conf.resources.pkg :as pkg]
+   [re-conf.resources.firewall :as fire]
    [re-conf.core :refer (invoke invoke-all report-n-exit assert-node-major-version)]
-   [re-conf.resources.log :refer (info debug error)]))
+   [re-conf.resources.log :as log :refer (info debug error)]))
 
 (defn desktop
   [env]
@@ -89,15 +91,19 @@
 (defn enrich [env]
   (-> env home main-user))
 
-(defn -main [e profile & args]
+(def profiles
+  #{:desktop :server :public :backup :re-ops})
+
+(defn -main [& args]
   (assert-node-major-version)
-  (let [env (if e (enrich (cljs.reader/read-string (io/slurp e))) {})]
-    (take! (initialize)
+  (let [{:keys [options] :as m} (parse-options args profiles)
+        {:keys [environment profile]} options
+        env (enrich (cljs.reader/read-string (io/slurp environment)))]
+    (println env profile)
+    (take! (async/merge [(pkg/initialize) (fire/initialize)])
            (fn [r]
              (info "Provisioning machine using re-base!" ::main)
              (run-profile env profile)))))
 
 (set! *main-cli-fn* -main)
 
-(comment
-  (-main "resources/dev.edn"))
