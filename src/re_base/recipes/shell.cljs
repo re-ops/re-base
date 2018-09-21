@@ -20,9 +20,11 @@
      (package "tmux")
      (clone "git://github.com/narkisr/.tmux.git" dest)
      (directory (<< "~{dest}/plugins/") :present)
-     (chown dest uid gid)
      (clone "git://github.com/tmux-plugins/tpm" (<< "~{dest}/plugins/tpm"))
      (symlink (<< "~{dest}/.tmux.conf") (<< "~{home}/.tmux.conf") :present)
+     (chown dest uid gid)
+     (clone "git://github.com/narkisr/.tmuxinator.git" (<< "~{home}/.tmuxinator.git"))
+     (chown (<< "~{home}/.tmuxinator.git") uid gid)
      (summary "tmux setup done"))))
 
 (defn zsh
