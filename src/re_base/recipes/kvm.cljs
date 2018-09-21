@@ -15,6 +15,7 @@
   []
   (->
    (package "qemu-kvm" "libvirt-bin" "bridge-utils" "virt-manager")
+   (line "/lib/udev/rules.d/99-kvm.rules" "KERNEL=='kvm', GROUP='kvm', MODE='0666'") ; https://bugzilla.redhat.com/show_bug.cgi?id=1479558
    (summary "kvm-base done")))
 
 (defn libvirt-networking
