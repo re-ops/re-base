@@ -35,6 +35,6 @@
   [{:keys [users]}]
   (->
    (group "libvirtd" :present)
-   (exec "/usr/sbin/usermod" "-G" "libvirtd" "-a" (users :main))
+   (exec "/usr/sbin/usermod" "-G" "libvirtd" "-a" (-> users :main :name))
    (summary "libvirtd-group done")))
 
