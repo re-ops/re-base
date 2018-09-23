@@ -99,7 +99,6 @@
   (let [{:keys [options] :as m} (parse-options args profiles)
         {:keys [environment profile]} options
         env (enrich (cljs.reader/read-string (io/slurp environment)))]
-    (println env profile)
     (take! (async/merge [(pkg/initialize) (fire/initialize)])
            (fn [r]
              (info "Provisioning machine using re-base!" ::main)

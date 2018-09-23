@@ -28,27 +28,6 @@
      (symlink (<< "~{dot}/.vimrc") (<< "~{home}/.vimrc") :present)
      (summary "dot-vim done"))))
 
-(defn vim-bundle
-  "Download and setup VIM plugins"
-  [{:keys [home uid gid]}]
-  (let [dot (<< "~{home}/.vim")
-        bundle (<< "~{dot}/bundle")
-        version "1.0.0"
-        archive (<< "vim-~{version}.tar.gz")
-        dest (<< "~{bundle}/~{archive}")
-        url (<< "https://github.com/narkisr/.vim/releases/download/v~{version}/~{archive}")
-        sha "497e82187930f010e9231abe2d581f3c339dad41400c24abc058fb320cff5f08"]
-    (->
-     (directory dot :present)
-     (directory bundle :present)
-     (download url dest)
-     (checksum dest sha :sha256)
-     (untar dest bundle)
-     (chown bundle uid gid)
-     (exec "/usr/bin/rsync" "-a" "--delete"
-           (<< "~{bundle}/snipmate-snippets") (<< "~{bundle}/snipmate/snippets"))
-     (summary "vim bundle done"))))
-
 (defn powerline
   "Install powerline"
   [{:keys [home uid gid]}]
