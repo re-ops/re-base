@@ -22,12 +22,12 @@
      (package "google-chrome-stable")
      (summary "google-chrome install"))))
 
-(defn xmonad [{:keys [home uid gid]}]
+(defn xmonad [{:keys [home name]}]
   (->
    (package "xmonad" "ghc" "libghc-xmonad-contrib-dev" "gnome-terminal")
    (clone "git://github.com/narkisr/xmonad-config.git" (<< "~{home}/.xmonad"))
-   (chown (<< "~{home}/.xmonad") uid gid)
-   (exec "/usr/bin/xmonad" "--recompile" :uid uid)
+   (chown (<< "~{home}/.xmonad") name)
+   (exec "/usr/bin/xmonad" "--recompile")
    (summary "xmonad setup")))
 
 (defn xfce

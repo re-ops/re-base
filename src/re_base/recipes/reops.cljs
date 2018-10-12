@@ -11,17 +11,17 @@
 (defn reops-user
   "Setting up reops user"
   [{:keys [ssh users]}]
-  (let [{:keys [gid uid name]} (:re-ops users)
+  (let [{:keys [name]} (:re-ops users)
         home (<< "/home/~{name}")]
     (->
-     (group name :present {:gid gid})
-     (user name :present {:home true :uid uid :gid gid})
+     (group name :present)
+     (user name :present {:home true})
      (directory (<< "~{home}/.ssh/") :present)
      (template "resources/ssh/authorized_keys.mustache" (<< "~{home}/.ssh/authorized_keys") ssh)
-     (chmod (<< "~{home}/.ssh/authorized_keys") 0600)
-     (chmod (<< "~{home}/.ssh/") 0700)
-     (chown (<< "~{home}/.ssh/") uid gid)
-     (chown (<< "~{home}/.ssh/authorized_keys") uid gid)
+     (chmod (<< "~{home}/.ssh/authorized_keys") "0600")
+     (chmod (<< "~{home}/.ssh/") "0700")
+     (chown (<< "~{home}/.ssh/") name name)
+     (chown (<< "~{home}/.ssh/authorized_keys") name name)
      (copy "resources/reops/re-ops" "/etc/sudoers.d/re-ops")
      (summary "re-ops user done"))))
 
@@ -31,9 +31,9 @@
   (let [prefix "/usr/local/bin"]
     (->
      (copy "resources/reops/apt-cleanup" (<< "~{prefix}/apt-cleanup"))
-     (chmod (<< "~{prefix}/apt-cleanup") 755)
+     (chmod (<< "~{prefix}/apt-cleanup") "0755")
      (copy "resources/reops/purge-kernels" (<< "~{prefix}/purge-kernels"))
-     (chmod (<< "~{prefix}/purge-kernels") 755)
+     (chmod (<< "~{prefix}/purge-kernels") "0755")
      (summary "re-ops scripts done"))))
 
 (defn re-gent

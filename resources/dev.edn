@@ -28,15 +28,12 @@
   :users {
     :main {
       :name "re-ops"
-      :uid 1000
-      :gid 1000
     }
     :re-ops {
       :name "re-ops"
-      :uid 1000
-      :gid 1000
     }
   }
+
   :email {
     :address "narkisr@gmail.com"
     :domain "gmail.com"

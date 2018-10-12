@@ -14,7 +14,7 @@
 
 (defn tmux
   "Setup tmux for user"
-  [{:keys [home gid uid]}]
+  [{:keys [home name]}]
   (let [dest (<< "~{home}/.tmux")]
     (->
      (package "tmux")
@@ -22,9 +22,9 @@
      (directory (<< "~{dest}/plugins/") :present)
      (clone "git://github.com/tmux-plugins/tpm" (<< "~{dest}/plugins/tpm"))
      (symlink (<< "~{dest}/.tmux.conf") (<< "~{home}/.tmux.conf") :present)
-     (chown dest uid gid)
+     (chown dest name name)
      (clone "git://github.com/narkisr/.tmuxinator.git" (<< "~{home}/.tmuxinator.git"))
-     (chown (<< "~{home}/.tmuxinator.git") uid gid)
+     (chown (<< "~{home}/.tmuxinator.git") name name)
      (summary "tmux setup done"))))
 
 (defn zsh
@@ -39,21 +39,21 @@
 
 (defn oh-my-zsh
   "Setup https://github.com/robbyrussell/oh-my-zsh"
-  [{:keys [home uid gid]}]
+  [{:keys [home name]}]
   (let [dest (<< "~{home}/.oh-my-zsh")]
     (->
      (clone "git://github.com/narkisr/oh-my-zsh.git" dest)
-     (chown dest uid gid)
+     (chown dest name name)
      (symlink (<< "~{dest}/.zshrc") (<< "~{home}/.zshrc") :present)
      (summary "oh-my-zsh setup done"))))
 
 (defn dot-files
   "Setting up dot files from git://github.com/narkisr/dots.git"
-  [{:keys [home uid gid]}]
+  [{:keys [home name]}]
   (let [dest (dots home)]
     (->
      (clone "git://github.com/narkisr/dots.git" dest)
-     (chown dest uid gid)
+     (chown dest name name)
      (summary "dot-files setup done"))))
 
 (defn ack

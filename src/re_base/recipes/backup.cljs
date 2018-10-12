@@ -25,7 +25,7 @@
      (download url tmp expected :sha256)
      (bzip2 tmp)
      (rename (<< "/tmp/~{release}") "/usr/bin/restic")
-     (chmod "/usr/bin/restic" 755)
+     (chmod "/usr/bin/restic" "0755")
      (summary "restic setup done"))))
 
 (defn octo

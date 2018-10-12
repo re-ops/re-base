@@ -20,22 +20,22 @@
 
 (defn dot-vim
   "Configure VIM"
-  [{:keys [home uid gid]}]
+  [{:keys [home name]}]
   (let [dot (<< "~{home}/.vim")]
     (->
      (clone "git://github.com/narkisr/.vim.git" dot)
-     (chown dot uid gid)
+     (chown dot name name)
      (symlink (<< "~{dot}/.vimrc") (<< "~{home}/.vimrc") :present)
      (summary "dot-vim done"))))
 
 (defn powerline
   "Install powerline"
-  [{:keys [home uid gid]}]
+  [{:keys [home name]}]
   (let [fonts (<< "~{home}/.fonts")
         repo "git://github.com/scotu/ubuntu-mono-powerline.git"]
     (->
      (directory fonts :present)
      (clone repo (<< "~{fonts}/ubuntu-mono-powerline"))
-     (chown fonts uid gid)
+     (chown fonts name)
      (summary "powerline done"))))
 
