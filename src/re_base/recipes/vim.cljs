@@ -36,6 +36,6 @@
     (->
      (directory fonts :present)
      (clone repo (<< "~{fonts}/ubuntu-mono-powerline"))
-     (chown fonts name)
+     (chown fonts name name)
      (summary "powerline done"))))
 
