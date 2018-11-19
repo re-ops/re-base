@@ -35,13 +35,15 @@
                re-base.recipes.shell)))
 
 (defn backup
+  "A machine running backup utilities"
   [env]
   (report-n-exit
    (invoke-all env
                re-base.recipes.backup
                re-base.recipes.shell)))
 
-(defn server
+(defn hypervisor
+  "A physical hypervisor server"
   [env]
   (report-n-exit
    (invoke-all env
@@ -52,6 +54,7 @@
                re-base.recipes.shell)))
 
 (defn public
+  "A web facing server"
   [env]
   (report-n-exit
    (invoke-all env
@@ -61,6 +64,7 @@
                re-base.recipes.security)))
 
 (defn re-ops
+  "Minimal configuration for supporting re-ops"
   [env]
   (report-n-exit
    (invoke-all env re-base.recipes.reops)))
@@ -73,7 +77,7 @@
 (defn run-profile [env profile]
   (case (keyword profile)
     :desktop (with-preqs desktop env)
-    :server  (with-preqs server env)
+    :hypervisor (with-preqs hypervisor env)
     :public  (with-preqs public env)
     :backup  (with-preqs backup env)
     :re-ops  (re-ops env)))
