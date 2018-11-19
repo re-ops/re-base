@@ -53,6 +53,17 @@
                re-base.recipes.docker
                re-base.recipes.shell)))
 
+(defn develop
+  "A remove server used for development"
+  [env]
+  (report-n-exit
+   (invoke-all env
+               re-base.recipes.vim
+               re-base.recipes.shell
+               re-base.recipes.docker
+               re-base.recipes.build
+               re-base.recipes.security)))
+
 (defn public
   "A web facing server"
   [env]
@@ -79,6 +90,7 @@
     :desktop (with-preqs desktop env)
     :hypervisor (with-preqs hypervisor env)
     :public  (with-preqs public env)
+    :develop  (with-preqs develop env)
     :backup  (with-preqs backup env)
     :re-ops  (re-ops env)))
 
