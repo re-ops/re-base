@@ -57,6 +57,7 @@
    (invoke-all env
                re-base.recipes.vim
                re-base.recipes.shell
+               re-base.recipes.docker
                re-base.recipes.security)))
 
 (defn re-ops
