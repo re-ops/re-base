@@ -7,6 +7,7 @@
    [re-conf.cli :refer (parse-options)]
    [re-base.recipes.vim]
    [re-base.recipes.kvm]
+   [re-base.recipes.langs]
    [re-base.recipes.shell]
    [re-base.recipes.build]
    [re-base.recipes.docker]
@@ -62,6 +63,7 @@
                re-base.recipes.shell
                re-base.recipes.docker
                re-base.recipes.build
+               re-base.recipes.langs
                re-base.recipes.security)))
 
 (defn public
