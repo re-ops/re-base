@@ -109,7 +109,7 @@
   (-> env home main-user))
 
 (def profiles
-  #{:desktop :server :public :backup :re-ops})
+  #{:desktop :server :public :backup :re-ops :develop})
 
 (defn -main [& args]
   (assert-node-major-version)
