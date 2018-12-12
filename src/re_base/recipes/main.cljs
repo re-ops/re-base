@@ -11,7 +11,8 @@
    [re-base.recipes.shell]
    [re-base.recipes.build]
    [re-base.recipes.docker]
-   [re-base.recipes.desktop]
+   [re-base.recipes.web]
+   [re-base.recipes.xfce]
    [re-base.recipes.backup]
    [re-base.recipes.preqs]
    [re-base.recipes.reops]
@@ -22,7 +23,18 @@
    [re-conf.core :refer (invoke invoke-all report-n-exit assert-node-major-version)]
    [re-conf.resources.log :as log :refer (info debug error)]))
 
+(defn lite-desktop
+  "Lite desktop setup"
+  [env]
+  (report-n-exit
+   (invoke-all env
+               re-base.recipes.vim
+               re-base.recipes.build
+               re-base.recipes.web
+               re-base.recipes.shell)))
+
 (defn desktop
+  "Desktop setup"
   [env]
   (report-n-exit
    (invoke-all env
@@ -31,7 +43,7 @@
                re-base.recipes.build
                re-base.recipes.kvm
                re-base.recipes.docker
-               re-base.recipes.desktop
+               re-base.recipes.xfce
                re-base.recipes.security
                re-base.recipes.shell)))
 
@@ -89,6 +101,7 @@
 
 (defn run-profile [env profile]
   (case (keyword profile)
+    :lite-desktop (with-preqs lite-desktop env)
     :desktop (with-preqs desktop env)
     :hypervisor (with-preqs hypervisor env)
     :public  (with-preqs public env)
@@ -111,7 +124,7 @@
   (-> env home main-user))
 
 (def profiles
-  #{:desktop :server :public :backup :re-ops :develop})
+  #{:lite-desktop :desktop :server :public :backup :re-ops :develop})
 
 (defn -main [& args]
   (assert-node-major-version)
