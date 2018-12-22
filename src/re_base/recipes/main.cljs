@@ -47,6 +47,16 @@
                re-base.recipes.security
                re-base.recipes.shell)))
 
+(defn nas
+  "A NAS machine"
+  [env]
+  (report-n-exit
+   (invoke-all env
+               re-base.recipes.vim
+               re-base.recipes.zfs
+               re-base.recipes.backup
+               re-base.recipes.shell)))
+
 (defn backup
   "A machine running backup utilities"
   [env]
@@ -102,6 +112,7 @@
 (defn run-profile [env profile]
   (case (keyword profile)
     :lite-desktop (with-preqs lite-desktop env)
+    :nas (with-preqs nas env)
     :desktop (with-preqs desktop env)
     :hypervisor (with-preqs hypervisor env)
     :public  (with-preqs public env)
@@ -124,7 +135,7 @@
   (-> env home main-user))
 
 (def profiles
-  #{:lite-desktop :desktop :server :public :backup :re-ops :develop})
+  #{:lite-desktop :desktop :server :public :backup :re-ops :develop :nas})
 
 (defn -main [& args]
   (assert-node-major-version)

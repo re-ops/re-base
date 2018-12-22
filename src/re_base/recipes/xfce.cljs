@@ -1,7 +1,7 @@
 (ns re-base.recipes.xfce
- (:require-macros
+  (:require-macros
    [clojure.core.strint :refer (<<)])
- (:require
+  (:require
    [re-conf.core :refer (apply*)]
    [re-conf.resources.git :refer (clone)]
    [re-conf.resources.shell :refer (exec)]
