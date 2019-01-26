@@ -14,7 +14,6 @@
   (let [{:keys [name]} (:re-ops users)
         home (<< "/home/~{name}")]
     (->
-     (group name :present)
      (user name :present {:home true})
      (directory (<< "~{home}/.ssh/") :present)
      (template "resources/ssh/authorized_keys.mustache" (<< "~{home}/.ssh/authorized_keys") ssh)
