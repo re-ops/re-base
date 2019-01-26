@@ -17,7 +17,7 @@
   (let [archive "/tmp/dropbox.tar.gz"
         url "https://www.dropbox.com/download?plat=lnx.x86_64"
         py_url "https://www.dropbox.com/download?dl=packages/dropbox.py"
-        py_bin (<< "~{home}/bin/dropbox.py")
+        py_bin (<< "~{home}/bin/dropbox")
         dest "/usr/local/dropbox-deamon"]
     (->
      (download url archive)
