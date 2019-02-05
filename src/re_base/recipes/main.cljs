@@ -5,7 +5,7 @@
    [cljs.core.async :as async :refer [take!]]
    [cljs-node-io.core :as io]
    [re-conf.cli :refer (parse-options)]
-   [re-base.recipes.vim]
+   [re-base.recipes.nvim]
    [re-base.recipes.kvm]
    [re-base.recipes.langs]
    [re-base.recipes.shell]
@@ -28,7 +28,7 @@
   [env]
   (report-n-exit
    (invoke-all env
-               re-base.recipes.vim
+               re-base.recipes.nvim
                re-base.recipes.build
                re-base.recipes.web
                re-base.recipes.shell)))
@@ -38,7 +38,7 @@
   [env]
   (report-n-exit
    (invoke-all env
-               re-base.recipes.vim
+               re-base.recipes.nvim
                re-base.recipes.backup
                re-base.recipes.build
                re-base.recipes.kvm
@@ -52,7 +52,7 @@
   [env]
   (report-n-exit
    (invoke-all env
-               re-base.recipes.vim
+               re-base.recipes.nvim
                re-base.recipes.zfs
                re-base.recipes.backup
                re-base.recipes.shell)))
@@ -70,7 +70,7 @@
   [env]
   (report-n-exit
    (invoke-all env
-               re-base.recipes.vim
+               re-base.recipes.nvim
                re-base.recipes.zfs
                re-base.recipes.kvm
                re-base.recipes.docker
@@ -81,7 +81,7 @@
   [env]
   (report-n-exit
    (invoke-all env
-               re-base.recipes.vim
+               re-base.recipes.nvim
                re-base.recipes.shell
                re-base.recipes.docker
                re-base.recipes.build
@@ -93,7 +93,7 @@
   [env]
   (report-n-exit
    (invoke-all env
-               re-base.recipes.vim
+               re-base.recipes.nvim
                re-base.recipes.shell
                re-base.recipes.docker
                re-base.recipes.security)))
