@@ -27,7 +27,9 @@
       (symlink (<< "/opt/~{release}/bin/nvim") "/usr/bin/vim")
       (summary "Neovim install done")))))
 
-(defn lang-support [{:keys [home user]}]
+(defn lang-support
+  "Installing language support for neovim, currently in Ubuntu 18.04 vim-ruby is only provided by vim-nox"
+  [{:keys [home user]}]
   (let [prefix "/home/~{user}/.npm"
         npmrc (<< "~{home}/.npmrc")]
     (->
@@ -38,6 +40,7 @@
      (package "npm" :present)
      (exec "/usr/bin/npm" "install" "--prefix" prefix "neovim")
      (exec "/usr/bin/npm" "install" "--prefix" prefix "node-cljfmt")
+     (package "vim-nox" :present)
      (summary "Neovim lang support done"))))
 
 (defn config
