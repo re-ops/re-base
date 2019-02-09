@@ -4,7 +4,7 @@
    [clojure.core.strint :refer (<<)])
   (:require
    [re-conf.resources.shell :refer (exec unless)]
-   [re-conf.resources.file :refer (line)]
+   [re-conf.resources.file :refer (line file)]
    [re-conf.resources.service :refer (service)]
    [re-conf.resources.user :refer (group)]
    [re-conf.resources.pkg :refer (package)]
@@ -13,10 +13,12 @@
 (defn kvm-base
   "Kvm base package"
   []
-  (->
-   (package "qemu-kvm" "libvirt-bin" "bridge-utils" "virt-manager")
-   (line "/lib/udev/rules.d/99-kvm.rules" "KERNEL=='kvm', GROUP='kvm', MODE='0666'") ; https://bugzilla.redhat.com/show_bug.cgi?id=1479558
-   (summary "kvm-base done")))
+  (let [rules "/lib/udev/rules.d/99-kvm.rules"]
+    (->
+     (package "qemu-kvm" "libvirt-bin" "bridge-utils" "virt-manager")
+     (file rules :present)
+     (line rules "KERNEL=='kvm', GROUP='kvm', MODE='0666'") ; https://bugzilla.redhat.com/show_bug.cgi?id=1479558
+     (summary "kvm-base done"))))
 
 (defn libvirt-networking
   "Networking settings for kvm"

@@ -1,5 +1,5 @@
-(ns re-base.recipes.vim
-  "Setting up VIM"
+(ns re-base.recipes.nvim
+  "Setting up NeoVim"
   (:require-macros
    [clojure.core.strint :refer (<<)])
   (:require
@@ -8,7 +8,7 @@
    [re-conf.resources.download :refer (download checksum)]
    [re-conf.resources.shell :refer (exec)]
    [re-conf.resources.archive :refer (untar)]
-   [re-conf.resources.file :refer (symlink directory chown line)]
+   [re-conf.resources.file :refer (symlink directory chown line file)]
    [re-conf.resources.output :refer (summary)]))
 
 (defn nvim
@@ -23,16 +23,19 @@
          expected "e28e6eeb2ebee0fdec22fd0a6bfad6f88440b6fe88823359ef6589c1fc2359fe"]
      (->
       (download url tmp expected :sha256)
-      (untar tmp (<< "/opt/~{release}"))
+      (untar tmp "/opt")
       (symlink (<< "/opt/~{release}/bin/nvim") "/usr/bin/vim")
       (summary "Neovim install done")))))
 
 (defn lang-support [{:keys [home user]}]
-  (->
-   (let [prefix "/home/~{user}/.npm"]
+  (let [prefix "/home/~{user}/.npm"
+        npmrc (<< "~{home}/.npmrc")]
+    (->
      (package "python3-pip" :present)
      (exec "/usr/bin/pip3" "install" "--user" "neovim")
-     (line (<< "~{home}/.npmrc") (<< "prefix = ~{prefix}"))
+     (file npmrc :present)
+     (line npmrc (<< "prefix = ~{prefix}"))
+     (package "npm" :present)
      (exec "/usr/bin/npm" "install" "--prefix" prefix "neovim")
      (exec "/usr/bin/npm" "install" "--prefix" prefix "node-cljfmt")
      (summary "Neovim lang support done"))))
