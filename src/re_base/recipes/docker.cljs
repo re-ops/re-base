@@ -27,11 +27,12 @@
 
 (defn compose
   "Setting up docker-compose"
-  []
+  [{:keys [users]}]
   (let [url "https://github.com/docker/compose/releases/download/1.21.2/docker-compose-Linux-x86_64"
         dest "/usr/local/bin/docker-compose"
         expected "8a11713e11ed73abcb3feb88cd8b5674b3320ba33b22b2ba37915b4ecffdf042"]
     (->
      (download url dest expected :sha256)
      (chmod dest "0777")
+     (template "resources/docker/docker-compose.mustache" "/etc/sudoers.d/docker-compose" (users :main))
      (summary "docker compsoe setup"))))
