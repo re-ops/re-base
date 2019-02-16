@@ -3,6 +3,7 @@
   (:require-macros
    [clojure.core.strint :refer (<<)])
   (:require
+   [re-conf.resources.shell :refer (exec)]
    [re-conf.resources.pkg :refer (package)]
    [re-conf.resources.file :refer (copy)]
    [re-conf.resources.user :refer (user)]
@@ -25,4 +26,5 @@
    (copy "resources/zfs/zfs.conf" "/etc/modprobe.d/zfs.conf")
    (copy "resources/zfs/91-zfs-permissions.rules" "/etc/udev/rules.d/91-zfs-permissions.rules")
    (user "zfs" :present {:home false})
+   (exec "/usr/sbin/usermod" "-G" "zfs" "-a" (-> users :main :name))
    (summary "zfs user done")))
