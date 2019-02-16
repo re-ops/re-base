@@ -24,7 +24,7 @@
      (->
       (download url tmp expected :sha256)
       (untar tmp "/opt")
-      (symlink (<< "/opt/~{release}/bin/nvim") "/usr/bin/vim")
+      (symlink (<< "/opt/~{release}/bin/nvim") "/usr/bin/nvim")
       (summary "Neovim install done")))))
 
 (defn lang-support
