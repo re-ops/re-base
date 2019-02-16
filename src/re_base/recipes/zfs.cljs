@@ -20,7 +20,7 @@
 (defn zfs-user
   "allow running zfs commands as non root user or as passwordless sudo see:
        https://github.com/zfsonlinux/zfs/issues/362"
-  []
+  [{:keys [users]}]
   (->
    (copy "resources/zfs/zfs.conf" "/etc/modprobe.d/zfs.conf")
    (copy "resources/zfs/91-zfs-permissions.rules" "/etc/udev/rules.d/91-zfs-permissions.rules")
