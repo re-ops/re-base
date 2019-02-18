@@ -29,8 +29,8 @@
 
 (defn lang-support
   "Installing language support for neovim, currently in Ubuntu 18.04 vim-ruby is only provided by vim-nox"
-  [{:keys [home user]}]
-  (let [prefix "/home/~{user}/.npm"
+  [{:keys [home name]}]
+  (let [prefix (<< "/home/~{name}/.npm")
         npmrc (<< "~{home}/.npmrc")]
     (->
      (package "python3-pip" :present)
@@ -40,7 +40,8 @@
      (package "npm" :present)
      (exec "/usr/bin/npm" "install" "--prefix" prefix "neovim")
      (exec "/usr/bin/npm" "install" "--prefix" prefix "node-cljfmt")
-     (package "vim-nox" :present)
+     (symlink (<< "~{prefix}/bin/cljfmt") (<< "~{home}/bin/cljfmt"))
+     (package "ruby-neovim" :present)
      (summary "Neovim lang support done"))))
 
 (defn config
