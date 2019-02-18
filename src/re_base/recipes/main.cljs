@@ -76,17 +76,20 @@
                re-base.recipes.docker
                re-base.recipes.shell)))
 
-(defn develop
-  "A remove server used for development"
+(defn server
+  "General purpose server"
   [env]
   (report-n-exit
    (invoke-all env
                re-base.recipes.nvim
-               re-base.recipes.shell
-               re-base.recipes.docker
+               re-base.recipes.backup
                re-base.recipes.build
+               re-base.recipes.zfs
+               re-base.recipes.kvm
+               re-base.recipes.docker
                re-base.recipes.langs
-               re-base.recipes.security)))
+               re-base.recipes.security
+               re-base.recipes.shell)))
 
 (defn public
   "A web facing server"
@@ -116,7 +119,7 @@
     :desktop (with-preqs desktop env)
     :hypervisor (with-preqs hypervisor env)
     :public  (with-preqs public env)
-    :develop  (with-preqs develop env)
+    :server  (with-preqs server env)
     :backup  (with-preqs backup env)
     :re-ops  (re-ops env)))
 
@@ -135,7 +138,7 @@
   (-> env home main-user))
 
 (def profiles
-  #{:lite-desktop :desktop :server :public :backup :re-ops :develop :nas})
+  #{:lite-desktop :desktop :server :public :backup :re-ops :nas})
 
 (defn -main [& args]
   (assert-node-major-version)
