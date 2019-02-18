@@ -5,7 +5,7 @@
   (:refer-clojure :exclude [update])
   (:require
    [re-conf.resources.download :refer (download)]
-   [re-conf.resources.file :refer (line chmod)]
+   [re-conf.resources.file :refer (line chmod template)]
    [re-conf.resources.pkg :refer (add-repo package)]
    [re-conf.resources.output :refer (summary)]))
 
