@@ -24,7 +24,7 @@
      (symlink (<< "~{dest}/.tmux.conf") (<< "~{home}/.tmux.conf") :present)
      (chown dest name name)
      (clone "git://github.com/narkisr/.tmuxinator.git" (<< "~{home}/.tmuxinator.git"))
-     (chown (<< "~{home}/.tmuxinator.git") name name)
+     (chown (<< "~{home}/.tmuxinator.git") name name {:recursive true})
      (summary "tmux setup done"))))
 
 (defn zsh
