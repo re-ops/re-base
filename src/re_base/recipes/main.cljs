@@ -4,7 +4,6 @@
   (:require
    [cljs.core.async :as async :refer [take!]]
    [cljs-node-io.core :as io]
-   [re-conf.cli :refer (parse-options)]
    [re-base.recipes.nvim]
    [re-base.recipes.kvm]
    [re-base.recipes.langs]
@@ -18,110 +17,29 @@
    [re-base.recipes.reops]
    [re-base.recipes.security]
    [re-base.recipes.zfs]
+   [re-base.recipes.networking]
    [re-conf.resources.pkg :as pkg]
    [re-conf.resources.firewall :as fire]
+   [re-conf.cli :refer (parse-options into-categories)]
    [re-conf.core :refer (invoke invoke-all report-n-exit assert-node-major-version)]
    [re-conf.resources.log :as log :refer (info debug error)]))
 
-(defn lite-desktop
-  "Lite desktop setup"
-  [env]
-  (report-n-exit
-   (invoke-all env
-               re-base.recipes.nvim
-               re-base.recipes.build
-               re-base.recipes.web
-               re-base.recipes.shell)))
+(def category-m
+  {:backup #{re-base.recipes.backup}
+   :nas #{re-base.recipes.zfs}
+   :virt #{re-base.recipes.docker re-base.recipes.kvm}
+   :dev #{re-base.recipes.build re-base.recipes.langs}
+   :base #{re-base.recipes.nvim re-base.recipes.shell re-base.recipes.security re-base.recipes.networking}
+   :re-ops #{re-base.recipes.reops}
+   :preqs #{re-base.recipes.preqs}
+   :desktop #{re-base.recipes.xfce re-base.recipes.web}})
 
-(defn desktop
-  "Desktop setup"
-  [env]
-  (report-n-exit
-   (invoke-all env
-               re-base.recipes.nvim
-               re-base.recipes.backup
-               re-base.recipes.build
-               re-base.recipes.kvm
-               re-base.recipes.docker
-               re-base.recipes.xfce
-               re-base.recipes.security
-               re-base.recipes.shell)))
-
-(defn nas
-  "A NAS machine"
-  [env]
-  (report-n-exit
-   (invoke-all env
-               re-base.recipes.nvim
-               re-base.recipes.zfs
-               re-base.recipes.backup
-               re-base.recipes.shell)))
-
-(defn backup
-  "A machine running backup utilities"
-  [env]
-  (report-n-exit
-   (invoke-all env
-               re-base.recipes.backup
-               re-base.recipes.shell)))
-
-(defn hypervisor
-  "A physical hypervisor server"
-  [env]
-  (report-n-exit
-   (invoke-all env
-               re-base.recipes.nvim
-               re-base.recipes.zfs
-               re-base.recipes.kvm
-               re-base.recipes.docker
-               re-base.recipes.shell)))
-
-(defn server
-  "General purpose server"
-  [env]
-  (report-n-exit
-   (invoke-all env
-               re-base.recipes.nvim
-               re-base.recipes.backup
-               re-base.recipes.build
-               re-base.recipes.zfs
-               re-base.recipes.kvm
-               re-base.recipes.docker
-               re-base.recipes.langs
-               re-base.recipes.security
-               re-base.recipes.shell)))
-
-(defn public
-  "A web facing server"
-  [env]
-  (report-n-exit
-   (invoke-all env
-               re-base.recipes.nvim
-               re-base.recipes.shell
-               re-base.recipes.docker
-               re-base.recipes.security)))
-
-(defn re-ops
-  "Minimal configuration for supporting re-ops"
-  [env]
-  (report-n-exit
-   (invoke-all env re-base.recipes.reops)))
-
-(defn with-preqs
-  [profile env]
-  (take!
-   (invoke-all env re-base.recipes.preqs) (fn [_] (profile env))))
-
-(defn run-profile [env profile]
-  (case (keyword profile)
-    :lite-desktop (with-preqs lite-desktop env)
-    :nas (with-preqs nas env)
-    :desktop (with-preqs desktop env)
-    :hypervisor (with-preqs hypervisor env)
-    :public  (with-preqs public env)
-    :server  (with-preqs server env)
-    :backup  (with-preqs backup env)
-    :re-ops  (re-ops env)))
+(defn run-categories [env cs]
+  (let [namespaces (mapcat (fn [k] (category-m k)) (into-categories cs))]
+    (take!
+     (invoke-all env [re-base.recipes.preqs])
+     (fn [_]
+       (report-n-exit (invoke-all env namespaces))))))
 
 (defn- home
   "Add home to the env"
@@ -137,18 +55,15 @@
 (defn enrich [env]
   (-> env home main-user))
 
-(def profiles
-  #{:lite-desktop :desktop :server :public :backup :re-ops :nas})
-
 (defn -main [& args]
   (assert-node-major-version)
-  (let [{:keys [options] :as m} (parse-options args profiles)
-        {:keys [environment profile]} options
+  (let [{:keys [options] :as m} (parse-options args category-m)
+        {:keys [environment categories]} options
         env (enrich (cljs.reader/read-string (io/slurp environment)))]
     (take! (async/merge [(pkg/initialize) (fire/initialize)])
            (fn [r]
              (info "Provisioning machine using re-base!" ::main)
-             (run-profile env profile)))))
+             (run-categories env categories)))))
 
 (set! *main-cli-fn* -main)
 
