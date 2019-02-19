@@ -40,6 +40,7 @@
      (package "npm" :present)
      (exec "/usr/bin/npm" "install" "--prefix" prefix "neovim")
      (exec "/usr/bin/npm" "install" "--prefix" prefix "node-cljfmt")
+     (directory (<< "~{home}/bin") :present)
      (symlink (<< "~{prefix}/node_modules/node-cljfmt/bin/cljfmt") (<< "~{home}/bin/cljfmt"))
      (package "ruby-neovim" :present)
      (summary "Neovim lang support done"))))
