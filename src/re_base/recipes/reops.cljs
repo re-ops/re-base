@@ -19,8 +19,7 @@
      (template "resources/ssh/authorized_keys.mustache" (<< "~{home}/.ssh/authorized_keys") ssh)
      (chmod (<< "~{home}/.ssh/authorized_keys") "0600")
      (chmod (<< "~{home}/.ssh/") "0700")
-     (chown (<< "~{home}/.ssh/") name name)
-     (chown (<< "~{home}/.ssh/authorized_keys") name name)
+     (chown (<< "~{home}/.ssh/") name name {:recursive true})
      (copy "resources/reops/re-ops" "/etc/sudoers.d/re-ops")
      (summary "re-ops user done"))))
 

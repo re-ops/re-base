@@ -24,7 +24,7 @@
      (->
       (download url tmp expected :sha256)
       (untar tmp "/opt")
-      (symlink (<< "/opt/~{release}/bin/nvim") "/usr/bin/nvim")
+      (symlink (<< "/opt/~{release}/bin/nvim") "/usr/bin/nvim" :present)
       (summary "Neovim install done")))))
 
 (defn lang-support
@@ -42,7 +42,7 @@
      (exec "/usr/bin/npm" "install" "--prefix" prefix "node-cljfmt")
      (directory (<< "~{home}/bin") :present)
      (symlink (<< "~{prefix}/node_modules/node-cljfmt/bin/cljfmt") (<< "~{home}/bin/cljfmt"))
-     (package "ruby-neovim" :present)
+     (exec "gem" "install" "neovim" :present)
      (summary "Neovim lang support done"))))
 
 (defn config
@@ -51,7 +51,7 @@
   (let [config (<< "~{home}/.config/nvim")]
     (->
      (clone "git://github.com/narkisr/nvim.git" config)
-     (chown config name name)
+     (chown config name name {:recursive true})
      (summary "Neovim config done"))))
 
 (defn powerline
@@ -62,6 +62,6 @@
     (->
      (directory fonts :present)
      (clone repo (<< "~{fonts}/ubuntu-mono-powerline"))
-     (chown fonts name name)
+     (chown fonts name name {:recursive true})
      (summary "powerline done"))))
 
