@@ -1,10 +1,12 @@
 (ns re-base.recipes.build
   "build tools recipes"
+  (:require-macros
+   [clojure.core.strint :refer (<<)])
   (:require
    [re-conf.resources.download :refer (download checksum)]
    [re-conf.resources.archive :refer (unzip)]
    [re-conf.resources.shell :refer (exec)]
-   [re-conf.resources.file :refer (chmod symlink)]
+   [re-conf.resources.file :refer (chmod symlink directory)]
    [re-conf.resources.output :refer (summary)]))
 
 (defn packer
@@ -22,10 +24,11 @@
 
 (defn lein
   "Setting up lein"
-  []
-  (let [dest "/usr/local/bin/lein"
+  [{:keys [home name]}]
+  (let [dest (<< "~{home}/bin/lein")
         url "https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein"]
     (->
+     (directory (<< "~{home}/bin") :present)
      (download url dest)
-     (chmod dest "0777")
+     (chmod dest "+x")
      (summary "lein done"))))
