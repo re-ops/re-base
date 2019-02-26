@@ -9,6 +9,6 @@
   []
   (->
    (file "/etc/resolv.conf" :absent)
-   (symlink "/var/run/systemd/resolve/resolv.conf" "/etc/resolv.conf")
+   (symlink "/etc/resolv.conf" "/var/run/systemd/resolve/resolv.conf")
    (summary "DNS setup done")))
 
