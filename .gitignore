@@ -9,3 +9,4 @@ re-conf.log
 main.js
 resources/prod.edn
 re-base.tar.gz
+.cpcache

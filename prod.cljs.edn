@@ -1,0 +1,6 @@
+^{:figwheel-core false}
+{
+ :main re-base.recipes.main
+ :output-to "main.js"
+ :target :nodejs
+}

@@ -1,0 +1,4 @@
+{:main re-gitea.recipes.main
+ :target :nodejs
+ :launch-node true
+ }
