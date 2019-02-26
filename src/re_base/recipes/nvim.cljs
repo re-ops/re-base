@@ -12,11 +12,11 @@
 
 (defn nvim
   "Installing Neovim"
-  []
+  [{:keys [home name]}]
   (->
-   (ppa "ppa:neovim-ppa/stable" :absent)
    (ppa "ppa:neovim-ppa/unstable" :present)
    (package "neovim" :present)
+   (chown (<< "~{home}/.local") name name {:recursive true})
    (summary "Neovim install done")))
 
 (defn nodejs-support
