@@ -3,11 +3,10 @@
   (:require-macros
    [clojure.core.strint :refer (<<)])
   (:require
-   [re-conf.resources.pkg :refer (package)]
+   [re-conf.resources.facts :refer (arm?)]
+   [re-conf.resources.pkg :refer (package ppa)]
    [re-conf.resources.git :refer (clone)]
-   [re-conf.resources.download :refer (download checksum)]
    [re-conf.resources.shell :refer (exec)]
-   [re-conf.resources.archive :refer (untar)]
    [re-conf.resources.file :refer (symlink directory chown line file)]
    [re-conf.resources.output :refer (summary)]))
 
@@ -15,35 +14,44 @@
   "Installing Neovim"
   []
   (->
-   (let [version "0.3.4"
-         release "nvim-linux64"
-         dest (<< "/opt/~{release}")
-         url (<< "https://github.com/neovim/neovim/releases/download/v~{version}/~{release}.tar.gz")
-         tmp (<< "/tmp/~{release}.tar.gz")
-         expected "e28e6eeb2ebee0fdec22fd0a6bfad6f88440b6fe88823359ef6589c1fc2359fe"]
-     (->
-      (download url tmp expected :sha256)
-      (untar tmp "/opt")
-      (symlink (<< "/opt/~{release}/bin/nvim") "/usr/bin/nvim" :present)
-      (summary "Neovim install done")))))
+   (ppa "ppa:neovim-ppa/stable" :absent)
+   (ppa "ppa:neovim-ppa/unstable" :present)
+   (package "neovim" :present)
+   (summary "Neovim install done")))
 
-(defn lang-support
-  "Installing language support for neovim, currently in Ubuntu 18.04 vim-ruby is only provided by vim-nox"
+(defn nodejs-support
+  "nodejs neovim support"
   [{:keys [home name]}]
   (let [prefix (<< "/home/~{name}/.npm")
         npmrc (<< "~{home}/.npmrc")]
-    (->
-     (package "python3-pip" :present)
-     (exec "/usr/bin/pip3" "install" "--user" "neovim")
-     (file npmrc :present)
-     (line npmrc (<< "prefix = ~{prefix}"))
-     (package "npm" :present)
-     (exec "/usr/bin/npm" "install" "--prefix" prefix "neovim")
-     (exec "/usr/bin/npm" "install" "--prefix" prefix "node-cljfmt")
-     (directory (<< "~{home}/bin") :present)
-     (symlink (<< "~{prefix}/node_modules/node-cljfmt/bin/cljfmt") (<< "~{home}/bin/cljfmt"))
-     (exec "gem" "install" "neovim" :present)
-     (summary "Neovim lang support done"))))
+    (-> (package "npm" :present)
+        (exec "/usr/bin/npm" "install" "--prefix" prefix "neovim")
+        (exec "/usr/bin/npm" "install" "--prefix" prefix "node-cljfmt")
+        (file npmrc :present)
+        (line npmrc (<< "prefix = ~{prefix}"))
+        (directory (<< "~{home}/bin") :present)
+        (symlink (<< "~{prefix}/node_modules/node-cljfmt/bin/cljfmt") (<< "~{home}/bin/cljfmt"))
+        (summary "Neovim nodejs"))))
+
+(defn python-support
+  "Neovim python support"
+  []
+  (->
+   (package "python3-pip" :present)
+   (package "python3-dev" :present)
+   (package "python-pip" :present)
+   (package "python-dev" :present)
+   (exec "/usr/bin/pip3" "install" "--user" "neovim")
+   (summary "Neovim python")))
+
+(defn ruby-support
+  "nvim ruby support"
+  []
+  (->
+   (package "rubygems" :present)
+   (package "ruby2.5-dev" :present)
+   (exec "/usr/bin/gem" "install" "neovim")
+   (summary "Neovim ruby")))
 
 (defn config
   "Configure nvim"
