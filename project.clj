@@ -13,7 +13,7 @@
                  ; << macro
                  [org.clojure/core.incubator "0.1.4"]
 
-                 [re-conf "0.4.7"]
+                 [re-conf "0.4.8"]
   ]
 
   :npm {
