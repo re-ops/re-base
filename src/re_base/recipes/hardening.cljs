@@ -35,7 +35,7 @@
    (package c "ssmtp" :present)
    (package "logwatch" :present)
    (template "resources/logwatch/ssmtp.mustache" "/etc/ssmtp/ssmtp.conf" email)
-   (summary "logwatch setup done")))
+   (summary "logwatch setup")))
 
 (defn common
   "Common hardening logic"
@@ -48,12 +48,12 @@
   (->
    (common)
    (service "bluetooth" :disable)
-   (summary "desktop hardening done")))
+   (summary "desktop hardening")))
 
 (defn server []
   (->
    (common)
-   (summary "server hardening done")))
+   (summary "server hardening")))
 
 (defn public
   "Interet facing server hardening"
@@ -62,4 +62,4 @@
    (common)
    (logwatch env)
    (sshd)
-   (summary "public hardening done")))
+   (summary "public hardening")))
