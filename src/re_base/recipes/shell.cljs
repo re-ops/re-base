@@ -25,7 +25,7 @@
      (chown dest name name)
      (clone "git://github.com/narkisr/.tmuxinator.git" (<< "~{home}/.tmuxinator.git"))
      (chown (<< "~{home}/.tmuxinator.git") name name {:recursive true})
-     (summary "tmux setup done"))))
+     (summary "tmux setup"))))
 
 (defn zsh
   "zsh setup"
@@ -35,7 +35,7 @@
      (package "zsh")
      (contains "/etc/passwd" (<< "~{name}:/bin/zsh"))
      (unless "/usr/bin/chsh" "-s" "/usr/bin/zsh" name)
-     (summary "zsh setup done"))))
+     (summary "zsh setup"))))
 
 (defn oh-my-zsh
   "Setup https://github.com/robbyrussell/oh-my-zsh"
@@ -45,7 +45,7 @@
      (clone "git://github.com/narkisr/oh-my-zsh.git" dest)
      (chown dest name name)
      (symlink (<< "~{dest}/.zshrc") (<< "~{home}/.zshrc") :present)
-     (summary "oh-my-zsh setup done"))))
+     (summary "oh-my-zsh setup"))))
 
 (defn dot-files
   "Setting up dot files from git://github.com/narkisr/dots.git"
@@ -54,7 +54,7 @@
     (->
      (clone "git://github.com/narkisr/dots.git" dest)
      (chown dest name name)
-     (summary "dot-files setup done"))))
+     (summary "dot-files setup"))))
 
 (defn ack
   "ack grep setup"
@@ -62,7 +62,7 @@
   (->
    (package "ack")
    (symlink (<< "~(dots home)/.ackrc") (<< "~{home}/.ackrc") :present)
-   (summary "ack setup done")))
+   (summary "ack setup")))
 
 (defn rlwrap
   "rlwrap setup"
@@ -70,4 +70,4 @@
   (->
    (package "rlwrap")
    (symlink (<< "~(dots home)/.inputrc") (<< "~{home}/.inputrc") :present)
-   (summary "rlwrap setup done")))
+   (summary "rlwrap setup")))
