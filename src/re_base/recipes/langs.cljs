@@ -4,7 +4,9 @@
    [clojure.core.strint :refer (<<)])
   (:require
    [re-conf.resources.facts :refer (arm?)]
-   [re-conf.resources.file :refer (file line)]
+   [re-conf.resources.file :refer (file line directory symlink)]
+   [re-conf.resources.download :refer (download)]
+   [re-conf.resources.shell :refer (exec)]
    [re-conf.resources.pkg :refer (package repository key-server update)]
    [re-conf.resources.output :refer (summary)]))
 
@@ -30,3 +32,16 @@
   (->
    (package "build-essential")
    (summary "build-essential done")))
+
+(defn clojure
+  "Setting up Clojure tools"
+  [{:keys [home]}]
+  (let [install "linux-install-1.10.0.414.sh"
+        url (<< "https://download.clojure.org/install/~{install}")
+        prefix (<< "~{home}/.clojure")]
+    (->
+     (download url (<< "/tmp/~{install}"))
+     (exec (<< "/tmp/~{install}") "--prefix" prefix)
+     (directory (<< "~{home}/bin/"))
+     (symlink (<< "~{prefix}/bin/clojure") (<< "~{home}/bin/clojure"))
+     (symlink (<< "~{prefix}/bin/clj") (<< "~{home}/bin/clj")))))
