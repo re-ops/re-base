@@ -3,6 +3,8 @@
   (:require-macros
    [clojure.core.strint :refer (<<)])
   (:require
+   [cljs.core.async :refer [go <!]]
+   [re-conf.resources.facts :refer [os]]
    [re-conf.resources.shell :refer (exec unless)]
    [re-conf.resources.file :refer (line file)]
    [re-conf.resources.service :refer (service)]
@@ -10,12 +12,26 @@
    [re-conf.resources.pkg :refer (package)]
    [re-conf.resources.output :refer (summary)]))
 
+(defn kvm-packages
+  "Installing kvm packages"
+  []
+  (go
+    (<!
+     (case (<! (os :release))
+       "18.04"
+       (->
+        (package "qemu-kvm" "libvirt-bin" "bridge-utils" "virt-manager")
+        (summary "kvm packages"))
+       "18.10"
+       (->
+        (package "qemu-kvm" "libvirt-daemon-system" "libvirt-clients" "bridge-utils" "virt-manager")
+        (summary "kvm packages"))))))
+
 (defn kvm-base
   "Kvm base package"
   []
   (let [rules "/lib/udev/rules.d/99-kvm.rules"]
     (->
-     (package "qemu-kvm" "libvirt-bin" "bridge-utils" "virt-manager")
      (file rules :present)
      (line rules "KERNEL=='kvm', GROUP='kvm', MODE='0666'") ; https://bugzilla.redhat.com/show_bug.cgi?id=1479558
      (summary "kvm-base done"))))
