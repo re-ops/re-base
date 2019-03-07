@@ -4,7 +4,7 @@
    [clojure.core.strint :refer (<<)])
   (:require
    [re-conf.resources.facts :refer (arm?)]
-   [re-conf.resources.file :refer (file line directory symlink)]
+   [re-conf.resources.file :refer (file line directory symlink chmod chown)]
    [re-conf.resources.download :refer (download)]
    [re-conf.resources.shell :refer (exec)]
    [re-conf.resources.pkg :refer (package repository key-server update)]
@@ -35,13 +35,17 @@
 
 (defn clojure
   "Setting up Clojure tools"
-  [{:keys [home]}]
+  [{:keys [home name]}]
   (let [install "linux-install-1.10.0.414.sh"
         url (<< "https://download.clojure.org/install/~{install}")
         prefix (<< "~{home}/.clojure")]
     (->
      (download url (<< "/tmp/~{install}"))
+     (package "curl")
+     (chmod (<< "/tmp/~{install}") "+x")
      (exec (<< "/tmp/~{install}") "--prefix" prefix)
-     (directory (<< "~{home}/bin/"))
-     (symlink (<< "~{prefix}/bin/clojure") (<< "~{home}/bin/clojure"))
-     (symlink (<< "~{prefix}/bin/clj") (<< "~{home}/bin/clj")))))
+     (directory (<< "~{home}/bin/") :present)
+     (symlink (<< "~{prefix}/bin/clojure") (<< "~{home}/bin/clojure") :present)
+     (symlink (<< "~{prefix}/bin/clj") (<< "~{home}/bin/clj") :present)
+     (chown prefix name name {:recursive true})
+     (summary "clojure tools"))))
