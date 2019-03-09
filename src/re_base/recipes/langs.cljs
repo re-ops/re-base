@@ -6,6 +6,7 @@
    [re-conf.resources.facts :refer (arm?)]
    [re-conf.resources.file :refer (file line directory symlink chmod chown)]
    [re-conf.resources.download :refer (download)]
+   [re-conf.resources.archive :refer (unzip)]
    [re-conf.resources.shell :refer (exec)]
    [re-conf.resources.pkg :refer (package repository key-server update)]
    [re-conf.resources.output :refer (summary)]))
@@ -49,3 +50,15 @@
      (symlink (<< "~{prefix}/bin/clj") (<< "~{home}/bin/clj") :present)
      (chown prefix name name {:recursive true})
      (summary "clojure tools"))))
+
+(defn joker
+  "Setting up Joker linter"
+  [{:keys [home]}]
+  (let [version "0.12.0"
+        archive (<< "joker-~{version}-linux-amd64.zip")
+        url (<< "https://github.com/candid82/joker/releases/download/v~{version}/~{archive}")]
+    (->
+     (download url (<< "/tmp/~{archive}"))
+     (directory (<< "~{home}/bin/") :present)
+     (unzip (<< "/tmp/~{archive}") (<< "~{home}/bin/"))
+     (summary "joker"))))
