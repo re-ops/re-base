@@ -4,12 +4,13 @@
    [clojure.core.strint :refer (<<)])
   (:require
    [re-base.common :refer (dots)]
-   [re-conf.resources.pkg :refer (package)]
+   [re-conf.resources.pkg :refer (package deb)]
    [re-conf.resources.shell :refer (unless)]
    [re-conf.spec.file :refer (contains)]
    [re-conf.resources.file :refer (chown directory symlink)]
    [re-conf.resources.git :refer (clone)]
    [re-conf.resources.shell :refer (exec)]
+   [re-conf.resources.download :refer (download)]
    [re-conf.resources.output :refer (summary)]))
 
 (defn tmux
@@ -71,3 +72,14 @@
    (package "rlwrap")
    (symlink (<< "~(dots home)/.inputrc") (<< "~{home}/.inputrc") :present)
    (summary "rlwrap setup")))
+
+(defn fd
+  "Setting up FD a friendly alternative to find"
+  []
+  (let [version "7.3.0"
+        artifact (<< "fd_~{version}_amd64.deb")
+        url (<< "https://github.com/sharkdp/fd/releases/download/v~{version}/~{artifact}")]
+    (->
+     (download url (<< "/tmp/~{artifact}"))
+     (package (<< "/tmp/~{artifact}") deb :present)
+     (summary "fd"))))

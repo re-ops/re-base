@@ -11,7 +11,7 @@
      ; << macro
      org.clojure/core.incubator  {:mvn/version "0.1.4"}
 
-     re-conf  {:mvn/version "0.4.8"}
+     re-conf  {:mvn/version "0.4.9"}
    }
 
    :paths  ["src" "target" "resources" "dev"]
