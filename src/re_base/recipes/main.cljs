@@ -6,6 +6,7 @@
    [cljs-node-io.core :as io]
    [re-base.recipes.nvim]
    [re-base.recipes.kvm]
+   [re-base.recipes.lxd]
    [re-base.recipes.langs]
    [re-base.recipes.shell]
    [re-base.recipes.build]
@@ -27,7 +28,7 @@
 (def category-m
   {:backup #{re-base.recipes.backup}
    :nas #{re-base.recipes.zfs}
-   :virt #{re-base.recipes.docker re-base.recipes.kvm}
+   :virt #{re-base.recipes.docker re-base.recipes.kvm re-base.recipes.lxd}
    :dev #{re-base.recipes.build re-base.recipes.langs}
    :base #{re-base.recipes.nvim re-base.recipes.shell re-base.recipes.security re-base.recipes.networking}
    :re-ops #{re-base.recipes.reops}
