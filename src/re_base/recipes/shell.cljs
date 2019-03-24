@@ -74,7 +74,7 @@
    (summary "rlwrap setup")))
 
 (defn fd
-  "Setting up FD a friendly alternative to find"
+  "fd a friendly alternative to find"
   []
   (let [version "7.3.0"
         artifact (<< "fd_~{version}_amd64.deb")
@@ -83,3 +83,14 @@
      (download url (<< "/tmp/~{artifact}"))
      (package (<< "/tmp/~{artifact}") deb :present)
      (summary "fd"))))
+
+(defn bat
+  "bat a modern cat"
+  []
+  (let [version "0.10.0"
+        artifact (<< "bat_~{version}_amd64.deb")
+        url (<< "https://github.com/sharkdp/bat/releases/download/v~{version}/~{artifact}")]
+    (->
+     (download url (<< "/tmp/~{artifact}"))
+     (package (<< "/tmp/~{artifact}") deb :present)
+     (summary "bat"))))
