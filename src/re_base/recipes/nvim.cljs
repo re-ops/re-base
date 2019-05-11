@@ -11,11 +11,10 @@
 
 (defn nvim
   "Installing Neovim"
-  [{:keys [home name]}]
+  []
   (->
    (ppa "ppa:neovim-ppa/unstable" :present)
    (package "neovim" :present)
-   (chown (<< "~{home}/.local") name name {:recursive true})
    (summary "Neovim install done")))
 
 (defn nodejs-support
@@ -34,13 +33,14 @@
 
 (defn python-support
   "Neovim python support"
-  []
+  [{:keys [home name]}]
   (->
    (package "python3-pip" :present)
    (package "python3-dev" :present)
    (package "python-pip" :present)
    (package "python-dev" :present)
    (exec "/usr/bin/pip3" "install" "--user" "neovim")
+   (chown (<< "~{home}/.local") name name {:recursive true})
    (summary "Neovim python")))
 
 (defn ruby-support
