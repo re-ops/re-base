@@ -8,7 +8,7 @@
    [re-conf.resources.download :refer (download)]
    [re-conf.resources.archive :refer (unzip)]
    [re-conf.resources.shell :refer (exec)]
-   [re-conf.resources.pkg :refer (package repository key-server update)]
+   [re-conf.resources.pkg :refer (package key-server update)]
    [re-conf.resources.output :refer (summary)]))
 
 (defn jdk
