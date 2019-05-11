@@ -3,7 +3,6 @@
   (:require-macros
    [clojure.core.strint :refer (<<)])
   (:require
-   [re-conf.resources.facts :refer (arm?)]
    [re-conf.resources.pkg :refer (package ppa)]
    [re-conf.resources.git :refer (clone)]
    [re-conf.resources.shell :refer (exec)]
