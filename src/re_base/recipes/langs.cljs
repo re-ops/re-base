@@ -8,7 +8,7 @@
    [re-conf.resources.download :refer (download)]
    [re-conf.resources.archive :refer (unzip)]
    [re-conf.resources.shell :refer (exec)]
-   [re-conf.resources.pkg :refer (package key-server update)]
+   [re-conf.resources.pkg :refer (package deb key-server update)]
    [re-conf.resources.output :refer (summary)]))
 
 (defn jdk
@@ -23,9 +23,13 @@
        (update)
        (package "zulu-embedded-8"))
      (summary "Azul embedded JDK done"))
-    (->
-     (package "openjdk-8-jdk")
-     (summary "OpenJDK 8 done"))))
+    (let [url "https://d3pxv6yz143wms.cloudfront.net/8.212.04.2"
+          artifact "java-1.8.0-amazon-corretto-jdk_8.212.04-2_amd64.deb"]
+      (->
+       (package "openjdk-8-jdk" :absent)
+       (download (<< "~{url}/~{artifact}") (<< "/tmp/~{artifact}"))
+       (package (<< "/tmp/~{artifact}") deb :present)
+       (summary "Correto JDK 8 done")))))
 
 (defn build-essential
   "Setting up build utilities"
