@@ -32,7 +32,6 @@
    :dev #{re-base.recipes.build re-base.recipes.langs}
    :base #{re-base.recipes.nvim re-base.recipes.shell re-base.recipes.security re-base.recipes.networking}
    :re-ops #{re-base.recipes.reops}
-   :preqs #{re-base.recipes.preqs}
    :desktop #{re-base.recipes.xfce re-base.recipes.web}})
 
 (defn run-categories [env cs]
