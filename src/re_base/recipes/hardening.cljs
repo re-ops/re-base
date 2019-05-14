@@ -25,7 +25,7 @@
     (->
      (copy "resources/networking/harden.conf" target)
      (rule {:port 22})
-     (firewall :present)
+     #_(firewall :present)
      (exec "/sbin/sysctl" "-p" target))))
 
 (defn logwatch

@@ -4,11 +4,11 @@
    [re-conf.resources.file :refer (symlink file)]
    [re-conf.resources.output :refer (summary)]))
 
-(defn dns
+#_(defn dns
   "Setting up DNS in Ubuntu 18.x systems"
   []
   (->
-   (file "/etc/resolv.conf" :absent)
-   (symlink "/etc/resolv.conf" "/var/run/systemd/resolve/resolv.conf")
+   (symlink "/etc/resolv.conf" :absent)
+   (symlink "/etc/resolv.conf" "/var/run/systemd/resolve/resolv.conf" :present)
    (summary "DNS setup done")))
 
