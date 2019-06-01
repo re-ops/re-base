@@ -3,11 +3,13 @@
   (:require-macros
    [clojure.core.strint :refer (<<)])
   (:require
+   [re-conf.resources.archive :refer (untar)]
+   [re-conf.resources.facts :refer (arch)]
    [re-base.common :refer (dots)]
    [re-conf.resources.pkg :refer (package deb)]
    [re-conf.resources.shell :refer (unless)]
    [re-conf.spec.file :refer (contains)]
-   [re-conf.resources.file :refer (chown directory symlink)]
+   [re-conf.resources.file :refer (chown directory symlink copy)]
    [re-conf.resources.git :refer (clone)]
    [re-conf.resources.shell :refer (exec)]
    [re-conf.resources.download :refer (download)]
@@ -77,20 +79,28 @@
   "fd a friendly alternative to find"
   []
   (let [version "7.3.0"
-        artifact (<< "fd_~{version}_amd64.deb")
+        artifacts {:arm64 (<< "fd_~{version}_amd64.deb") :amd64 (<< "fd-v~{version}-arm-unknown-linux-musleabihf.tar.gz")}
+        artifcat (artifacts (arch))
         url (<< "https://github.com/sharkdp/fd/releases/download/v~{version}/~{artifact}")]
-    (->
-     (download url (<< "/tmp/~{artifact}"))
-     (package (<< "/tmp/~{artifact}") deb :present)
-     (summary "fd"))))
+    (case (arch)
+      :amd64 (->
+              (download url (<< "/tmp/~{artifact}"))
+              (package (<< "/tmp/~{artifact}") deb :present)
+              (summary "fd"))
+      :arm64 (let [path (first (clojure.string/split artifact #"\."))]
+               (->
+                (download url (<< "/tmp/~{artifact}"))
+                (untar (<< "/tmp/~{artifact}") "/tmp/")
+                (copy (<< "/tmp/~{path}/fd") "/usr/bin/")
+                (summary "fd"))))))
 
-(defn bat
-  "bat a modern cat"
-  []
-  (let [version "0.10.0"
-        artifact (<< "bat_~{version}_amd64.deb")
-        url (<< "https://github.com/sharkdp/bat/releases/download/v~{version}/~{artifact}")]
-    (->
-     (download url (<< "/tmp/~{artifact}"))
-     (package (<< "/tmp/~{artifact}") deb :present)
-     (summary "bat"))))
+#_(defn bat
+    "bat a modern cat"
+    []
+    (let [version "0.10.0"
+          artifact (<< "bat_~{version}_~(arch).deb")
+          url (<< "https://github.com/sharkdp/bat/releases/download/v~{version}/~{artifact}")]
+      (->
+       (download url (<< "/tmp/~{artifact}"))
+       (package (<< "/tmp/~{artifact}") deb :present)
+       (summary "bat"))))

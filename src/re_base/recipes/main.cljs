@@ -17,8 +17,8 @@
    [re-base.recipes.preqs]
    [re-base.recipes.reops]
    [re-base.recipes.security]
+   [re-base.recipes.encryption]
    [re-base.recipes.zfs]
-   [re-base.recipes.networking]
    [re-conf.resources.pkg :as pkg]
    [re-conf.resources.firewall :as fire]
    [re-conf.cli :refer (parse-options into-categories)]
@@ -29,10 +29,10 @@
   {:backup #{re-base.recipes.backup}
    :nas #{re-base.recipes.zfs}
    :virt #{re-base.recipes.docker re-base.recipes.kvm re-base.recipes.lxd}
-   :dev #{re-base.recipes.build re-base.recipes.langs}
-   :base #{re-base.recipes.nvim re-base.recipes.shell re-base.recipes.security re-base.recipes.networking}
+   :dev #{re-base.recipes.nvim re-base.recipes.build re-base.recipes.langs}
+   :base #{re-base.recipes.shell re-base.recipes.security}
    :re-ops #{re-base.recipes.reops}
-   :desktop #{re-base.recipes.xfce re-base.recipes.web}})
+   :desktop #{re-base.recipes.xfce re-base.recipes.encryption re-base.recipes.web}})
 
 (defn run-categories [env cs]
   (let [namespaces (mapcat (fn [k] (category-m k)) (into-categories cs))]
