@@ -22,7 +22,7 @@
        (->
         (package "qemu-kvm" "libvirt-bin" "bridge-utils" "virt-manager")
         (summary "kvm packages"))
-       "18.10"
+       ("18.10" "19.04")
        (->
         (package "qemu-kvm" "libvirt-daemon-system" "libvirt-clients" "bridge-utils" "virt-manager")
         (summary "kvm packages"))))))
